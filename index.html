@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="theme-color" content="#2a3c63" />
+  <meta name="description" content="Pulse Grid : puzzle arcade de placement de blocs, modes Classic et Shapes, 100 % hors ligne." />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Pulse Grid" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="format-detection" content="telephone=no" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta property="og:title" content="Pulse Grid" />
+  <meta property="og:description" content="Puzzle arcade de placement de blocs. Modes Classic et Shapes, 100 % hors ligne." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="icons/icon-512.png" />
+  <meta name="color-scheme" content="dark" />
+  <link rel="icon" type="image/png" sizes="64x64" href="icons/favicon-64.png" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+  <title>Pulse Grid</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <noscript><p style="padding:24px;font-family:sans-serif;color:#fff">Pulse Grid nécessite JavaScript pour fonctionner.</p></noscript>
+  <div id="app" class="app-shell">
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></symbol><symbol id="i-shop" viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8a3 3 0 016 0"/></symbol><symbol id="i-tasks" viewBox="0 0 24 24"><path d="M4 6l2 2 3-3"/><path d="M4 14l2 2 3-3"/><path d="M12 7h8"/><path d="M12 15h8"/></symbol><symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></symbol><symbol id="i-chart" viewBox="0 0 24 24"><path d="M5 20v-7"/><path d="M12 20V5"/><path d="M19 20v-11"/></symbol><symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 4h8v6a4 4 0 01-8 0V4z"/><path d="M8 6H4v1a4 4 0 004 4"/><path d="M16 6h4v1a4 4 0 01-4 4"/><path d="M12 14v4"/><path d="M8 20h8"/></symbol><symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h9"/><path d="M19 7h1"/><circle cx="16" cy="7" r="2.2"/><path d="M4 17h1"/><path d="M11 17h9"/><circle cx="8" cy="17" r="2.2"/></symbol><symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5l11 7-11 7V5z" fill="currentColor"/></symbol><symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol><symbol id="i-next" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol><symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></symbol><symbol id="i-gift" viewBox="0 0 24 24"><path d="M4 10h16v10H4z"/><path d="M3 7h18v3H3z"/><path d="M12 7v13"/><path d="M12 7c-2-4-6-3-5 0"/><path d="M12 7c2-4 6-3 5 0"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></symbol><symbol id="i-lock" viewBox="0 0 24 24"><path d="M6 11h12v9H6z"/><path d="M8 11V8a4 4 0 018 0v3"/></symbol><symbol id="i-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7l4 5-4 5-4-5 4-5z"/></symbol><symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9L12 3z"/></symbol><symbol id="i-share" viewBox="0 0 24 24"><path d="M12 15V4"/><path d="M8 8l4-4 4 4"/><path d="M5 12v8h14v-8"/></symbol><symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11"/><path d="M8 11l4 4 4-4"/><path d="M5 20h14"/></symbol><symbol id="i-reset" viewBox="0 0 24 24"><path d="M4 12a8 8 0 108-8"/><path d="M4 4v5h5"/></symbol><symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 115 .5c0 1.5-2.5 2-2.5 3.5"/><path d="M12 17.5v.01"/></symbol><symbol id="i-volume" viewBox="0 0 24 24"><path d="M4 10v4h4l5 4V6L8 10H4z"/><path d="M16 9a4 4 0 010 6"/><path d="M18.5 6.5a8 8 0 010 11"/></symbol><symbol id="i-volume-off" viewBox="0 0 24 24"><path d="M4 10v4h4l5 4V6L8 10H4z"/><path d="M17 9l5 6"/><path d="M22 9l-5 6"/></symbol><symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="16" r="2"/></symbol><symbol id="i-music-off" viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="16" r="2"/><path d="M3 3l18 18"/></symbol><symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14"/><path d="M16 5v14"/></symbol><symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 00-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0012 3z"/></symbol><symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></symbol><symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3L5 13h6l-1 8 8-11h-6l1-7z"/></symbol><symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 3c1 4 5 5 5 10a5 5 0 01-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-5 1-9z"/></symbol><symbol id="i-crown" viewBox="0 0 24 24"><path d="M3 8l4 4 5-7 5 7 4-4-2 11H5L3 8z"/></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16"/><path d="M9 3v4"/><path d="M15 3v4"/></symbol><symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/></symbol><symbol id="i-trend" viewBox="0 0 24 24"><path d="M4 17l6-6 4 4 7-8"/><path d="M15 7h6v6"/></symbol><symbol id="i-shapes" viewBox="0 0 24 24"><path d="M4 19l5-10 5 10H4z"/><circle cx="17" cy="8" r="3.5"/></symbol><symbol id="i-box" viewBox="0 0 24 24"><path d="M4 8l8-4 8 4v8l-8 4-8-4V8z"/><path d="M4 8l8 4 8-4"/><path d="M12 12v8"/></symbol><symbol id="i-rows" viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></symbol><symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><path d="M12 7.5v.01"/></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></symbol><symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 4l9 16H3L12 4z"/><path d="M12 10v4"/><path d="M12 17v.01"/></symbol><symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 4v5"/><path d="M12 15v5"/><path d="M4 12h5"/><path d="M15 12h5"/></symbol><symbol id="i-logo" viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2.2" fill="currentColor" stroke="none"/><rect x="13" y="3" width="8" height="8" rx="2.2" fill="currentColor" stroke="none" opacity=".6"/><rect x="3" y="13" width="8" height="8" rx="2.2" fill="currentColor" stroke="none" opacity=".6"/><rect x="13" y="13" width="8" height="8" rx="2.2" fill="currentColor" stroke="none"/></symbol></defs></svg>
+    <div id="boot-screen" class="boot-screen" aria-label="Chargement">
+      <div class="brand-mark large"><svg class="ico" aria-hidden="true"><use href="#i-logo"/></svg></div>
+      <div class="boot-wordmark">PULSE GRID</div>
+      <div class="loader"><span></span></div>
+    </div>
+
+    <main id="screens">
+      <section id="screen-home" class="screen active" aria-labelledby="home-title">
+        <header class="topbar home-topbar">
+          <div class="brand-lockup">
+            <div class="brand-mark"><svg class="ico" aria-hidden="true"><use href="#i-logo"/></svg></div>
+            <div>
+              <div class="eyebrow">ARCADE PUZZLE</div>
+              <h1 id="home-title">PULSE GRID</h1>
+            </div>
+          </div>
+          <div class="topbar-actions" aria-label="Réglages audio">
+            <button class="icon-button" data-route="settings" aria-label="Paramètres"><svg class="ico" aria-hidden="true"><use href="#i-sliders"/></svg></button>
+            <button class="icon-button audio-toggle music-toggle" data-action="toggle-music" aria-label="Activer ou couper la musique"><span id="music-icon"><svg class="ico" aria-hidden="true"><use href="#i-music"/></svg></span></button>
+            <button class="icon-button audio-toggle" data-action="toggle-sound" aria-label="Activer ou couper les effets sonores"><span id="sound-icon"><svg class="ico" aria-hidden="true"><use href="#i-volume"/></svg></span></button>
+          </div>
+        </header>
+
+        <div class="home-content page-content">
+          <div class="player-strip">
+            <div class="level-badge"><span>NIV.</span><strong id="home-level">1</strong></div>
+            <div class="xp-track-wrap">
+              <div class="row-between"><span>Progression</span><span id="home-xp-label">0 / 400 XP</span></div>
+              <div class="xp-track"><span id="home-xp-fill"></span></div>
+            </div>
+            <div class="currency-pill"><span class="coin-icon"><svg class="ico" aria-hidden="true"><use href="#i-coin"/></svg></span><strong id="home-coins">240</strong></div>
+          </div>
+          <article class="hero-card">
+            <div class="hero-orbit orbit-one"></div>
+            <div class="hero-orbit orbit-two"></div>
+            <div class="hero-copy">
+              <span class="eyebrow accent">CLASSIC</span>
+              <h2>Classic</h2>
+              <p>Grille 8×8. Place les fragments, complète des lignes et enchaîne les combos.</p>
+              <div class="hero-record"><span>MEILLEUR SCORE</span><strong id="home-best">0</strong></div>
+              <button class="primary-button hero-play" data-action="play"><span>JOUER</span><b><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></b></button>
+            </div>
+            <div class="hero-visual" aria-hidden="true">
+              <span class="hero-tile tile-a"></span><span class="hero-tile tile-b"></span><span class="hero-tile tile-c"></span>
+              <span class="hero-tile tile-d"></span><span class="hero-tile tile-e"></span><span class="hero-tile tile-f"></span>
+              
+            </div>
+          </article>
+
+          <article id="resume-card" class="resume-card hidden">
+            <div class="resume-icon"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></div>
+            <div class="resume-copy"><span class="eyebrow accent">PARTIE EN COURS</span><strong id="resume-card-text">CLASSIC</strong></div>
+            <button class="primary-button resume-button" data-action="resume-run"><span>REPRENDRE</span><b><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></b></button>
+          </article>
+
+          <article id="shapes-card" class="shapes-card">
+            <div id="shapes-card-visual" class="shapes-card-visual" aria-hidden="true"></div>
+            <div class="shapes-card-copy">
+              <span class="eyebrow accent">SHAPES</span>
+              <h2>Plateaux Shapes</h2>
+              <p id="shapes-card-text">0 / 5 plateaux maîtrisés</p>
+              <div class="shapes-card-progress">
+                <div class="row-between"><span id="shapes-card-board">■ CARRÉ</span><b id="shapes-card-pct">0 %</b></div>
+                <div class="mini-progress"><span id="shapes-card-fill"></span></div>
+              </div>
+              <div class="shapes-card-actions">
+                <button class="primary-button shapes-play" data-action="play-shapes"><span>JOUER</span><b><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></b></button>
+                <button class="ghost-button" data-route="shapes">PLATEAUX</button>
+              </div>
+            </div>
+          </article>
+
+          <article id="daily-bonus" class="daily-bonus">
+            <div class="daily-bonus-icon"><svg class="ico" aria-hidden="true"><use href="#i-gift"/></svg></div>
+            <div class="daily-bonus-copy"><span class="eyebrow accent">BONUS QUOTIDIEN</span><strong id="daily-bonus-title">Jour 1</strong><small id="daily-bonus-text"></small></div>
+            <button id="daily-bonus-button" class="daily-bonus-button" data-action="claim-daily">RÉCUPÉRER</button>
+          </article>
+
+          <div class="section-heading"><h2>Ton espace</h2><span class="section-line"></span></div>
+          <div class="quick-grid">
+            <button class="quick-card shop-card" data-route="shop"><span class="quick-icon"><svg class="ico" aria-hidden="true"><use href="#i-shop"/></svg></span><span>Boutique</span><small>Skins et effets</small></button>
+            <button class="quick-card missions-card" data-route="missions"><span class="quick-icon"><svg class="ico" aria-hidden="true"><use href="#i-tasks"/></svg></span><span>Missions</span><small id="home-mission-count">0 à réclamer</small></button>
+            <button class="quick-card style-card" data-route="collection"><span class="quick-icon"><svg class="ico" aria-hidden="true"><use href="#i-layers"/></svg></span><span>Atelier</span><small>Skins, plateaux, effets</small></button>
+            <button class="quick-card stats-card" data-route="stats"><span class="quick-icon"><svg class="ico" aria-hidden="true"><use href="#i-chart"/></svg></span><span>Stats</span><small>Ta progression</small></button>
+            <button class="quick-card trophies-card" data-route="trophies"><span class="quick-icon"><svg class="ico" aria-hidden="true"><use href="#i-trophy"/></svg></span><span>Trophées</span><small id="home-trophy-count">0 / 23</small></button>
+            <button class="quick-card progression-card" data-route="progression"><span class="quick-icon"><svg class="ico" aria-hidden="true"><use href="#i-star"/></svg></span><span>Progression</span><small id="home-progression-next">Route des récompenses</small></button>
+            <button class="quick-card leaderboard-card" data-route="leaderboard"><span class="quick-icon"><svg class="ico" aria-hidden="true"><use href="#i-crown"/></svg></span><span class="lb-card-copy"><span>Classement</span><small id="home-leaderboard-sub">Top mondial Classic</small></span><span class="lb-card-arrow"><svg class="ico" aria-hidden="true"><use href="#i-next"/></svg></span></button>
+          </div>
+
+          <article class="daily-card" data-route="missions">
+            <div class="daily-icon"><svg class="ico" aria-hidden="true"><use href="#i-target"/></svg></div>
+            <div class="daily-copy"><span class="eyebrow">DÉFI DU JOUR</span><strong id="home-mission-title">Chargement…</strong><div class="mini-progress"><span id="home-mission-fill"></span></div></div>
+            <span class="daily-arrow"><svg class="ico" aria-hidden="true"><use href="#i-next"/></svg></span>
+          </article>
+        </div>
+      </section>
+
+      <section id="screen-game" class="screen game-screen" aria-label="Partie en cours">
+        <header class="game-topbar">
+          <button class="icon-button dark" data-action="game-home" aria-label="Retour à l'accueil"><svg class="ico" aria-hidden="true"><use href="#i-back"/></svg></button>
+          <div class="game-stat"><span>SCORE</span><strong id="game-score">0</strong></div>
+          <div class="game-stat best"><span>MEILLEUR</span><strong id="game-best">0</strong></div>
+          <button class="icon-button dark" data-action="pause" aria-label="Pause"><svg class="ico" aria-hidden="true"><use href="#i-pause"/></svg></button>
+        </header>
+        <div class="game-content">
+          <div class="combo-row"><span id="game-message">Choisis un fragment et fais-le glisser.</span><span id="combo-badge" class="combo-badge hidden">COMBO ×<b>0</b></span></div>
+          <div class="charge-row" aria-label="Charge Pulse"><div class="charge-copy"><b>CHARGE PULSE</b><small id="charge-message">Dissous des lignes pour charger une rafale.</small></div><div class="charge-track"><span id="charge-fill"></span></div><strong id="charge-value">0%</strong></div>
+          <div id="shape-hud" class="shape-hud hidden" aria-label="Maîtrise du plateau">
+            <span id="shape-hud-icon" class="shape-hud-icon">■</span>
+            <b id="shape-hud-name">CARRÉ</b>
+            <div class="shape-hud-track"><span id="shape-hud-fill"></span></div>
+            <strong id="shape-hud-pct">0%</strong>
+          </div>
+          <div id="board-wrap" class="board-wrap">
+            <div id="board" class="board" role="grid" aria-label="Grille de jeu"></div>
+            <div id="fx-layer" class="fx-layer" aria-hidden="true"></div>
+            <div id="clear-feedback" class="clear-feedback" aria-live="polite" aria-atomic="true" aria-hidden="true">
+              <div class="clear-feedback-badge">
+                
+                <strong id="clear-feedback-text"></strong>
+                
+                <small id="clear-feedback-subtitle"></small>
+              </div>
+            </div>
+            <div id="high-score-feedback" class="high-score-feedback" aria-live="polite" aria-hidden="true">
+              <span>NEW HIGH SCORE</span>
+              <strong id="high-score-value">0</strong>
+            </div>
+          </div>
+          <div class="game-subbar"><div><span class="eyebrow">FRAGMENTS</span><strong>Choisis un fragment</strong></div><button class="text-button" data-action="hint"><svg class="ico" aria-hidden="true"><use href="#i-bulb"/></svg> INDICE</button></div>
+          <div id="booster-bar" class="booster-bar" aria-label="Bonus disponibles en partie"></div>
+          <div id="piece-tray" class="piece-tray" aria-label="Fragments disponibles"></div>
+          <div class="game-tip"><span class="tip-dot"></span><span>Astuce : tu peux aussi toucher un fragment, puis toucher la grille.</span></div>
+        </div>
+      </section>
+
+      <section id="screen-settings" class="screen" aria-labelledby="settings-title">
+        <header class="subpage-topbar"><button class="icon-button" data-route="home" aria-label="Retour"><svg class="ico" aria-hidden="true"><use href="#i-back"/></svg></button><div><div class="eyebrow">PRÉFÉRENCES</div><h1 id="settings-title">Paramètres</h1></div><div class="header-symbol"><svg class="ico" aria-hidden="true"><use href="#i-sliders"/></svg></div></header>
+        <div class="page-content subpage-content settings-page">
+
+          <section class="settings-group" aria-label="Audio">
+            <h2 class="settings-title">Audio</h2>
+            <button class="setting-row" data-action="toggle-sound"><span class="setting-copy"><b>Effets sonores</b><small>Poses, lignes, combos, récompenses</small></span><strong id="sound-label">ON</strong><span class="switch"></span></button>
+            <button class="setting-row" data-action="toggle-music"><span class="setting-copy"><b>Musique d'ambiance</b><small>Nappes calmes générées en direct</small></span><strong id="music-label">OFF</strong><span class="switch"></span></button>
+            <div class="setting-row setting-slider"><span class="setting-copy"><b>Volume</b><small>Effets et musique</small></span><input id="volume-control" type="range" min="0" max="100" step="1" value="72" aria-label="Volume" /><output id="volume-label">72%</output></div>
+            <button class="setting-row setting-action" data-action="test-sound"><span class="setting-copy"><b>Tester le son</b><small>Joue un court son pour régler le volume</small></span><span class="setting-go"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></span></button>
+          </section>
+
+          <section class="settings-group" aria-label="Affichage">
+            <h2 class="settings-title">Affichage</h2>
+            <button class="setting-row" data-action="toggle-theme"><span class="setting-copy"><b>Fond clair</b><small>Désactivé : thème sombre d'origine</small></span><strong id="theme-label">CLAIR</strong><span class="switch"></span></button>
+            <button class="setting-row" data-action="toggle-motion"><span class="setting-copy"><b>Réduire les animations</b><small>Moins de mouvement, utile sur un téléphone lent</small></span><strong id="motion-label">OFF</strong><span class="switch"></span></button>
+            <button class="setting-row" data-action="toggle-tip"><span class="setting-copy"><b>Astuce en jeu</b><small>Rappel sous les fragments</small></span><strong id="tip-label">ON</strong><span class="switch"></span></button>
+          </section>
+
+          <section class="settings-group" aria-label="Jeu">
+            <h2 class="settings-title">Jeu</h2>
+            <button class="setting-row" data-action="toggle-haptics"><span class="setting-copy"><b>Vibrations</b><small>Retour haptique à chaque action</small></span><strong id="haptics-label">ON</strong><span class="switch"></span></button>
+          </section>
+
+          <section class="settings-group" aria-label="Application">
+            <h2 class="settings-title">Application</h2>
+            <button id="install-row" class="setting-row setting-action" data-action="install-app"><span class="setting-copy"><b>Installer l'application</b><small id="install-hint">Plein écran et hors ligne</small></span><span class="setting-go"><svg class="ico" aria-hidden="true"><use href="#i-download"/></svg></span></button>
+            <button class="setting-row setting-action" data-action="open-tutorial"><span class="setting-copy"><b>Comment jouer</b><small>Revoir le tutoriel</small></span><span class="setting-go"><svg class="ico" aria-hidden="true"><use href="#i-help"/></svg></span></button>
+          </section>
+
+          <section class="settings-group" aria-label="Données">
+            <h2 class="settings-title">Sauvegarde &amp; données</h2>
+            <p class="settings-note">Ta progression est enregistrée sur cet appareil. Exporte-la pour la garder en sécurité ou la transférer sur un autre téléphone.</p>
+            <div class="settings-buttons">
+              <button class="ghost-button" data-action="export-save">EXPORTER</button>
+              <button class="ghost-button" data-action="copy-save">COPIER</button>
+              <button class="ghost-button" data-action="import-save">IMPORTER</button>
+            </div>
+            <input id="import-file" type="file" accept="application/json,.json" hidden />
+          </section>
+
+          <section class="settings-group danger" aria-label="Réinitialisation">
+            <h2 class="settings-title">Réinitialisation</h2>
+            <button class="setting-row setting-action" data-action="reset-classic"><span class="setting-copy"><b>Remettre Classic à zéro</b><small>Meilleur score et statistiques Classic</small></span><span class="setting-go"><svg class="ico" aria-hidden="true"><use href="#i-reset"/></svg></span></button>
+            <button class="setting-row setting-action" data-action="reset-shapes"><span class="setting-copy"><b>Remettre Shapes à zéro</b><small>Plateaux maîtrisés et progression Shapes</small></span><span class="setting-go"><svg class="ico" aria-hidden="true"><use href="#i-reset"/></svg></span></button>
+            <button class="setting-row setting-action" data-action="reset-all"><span class="setting-copy"><b>Tout effacer</b><small>Niveau, pièces, objets, missions, tout</small></span><span class="setting-go"><svg class="ico" aria-hidden="true"><use href="#i-warn"/></svg></span></button>
+          </section>
+
+          <section class="settings-group" aria-label="À propos">
+            <h2 class="settings-title">À propos</h2>
+            <button class="setting-row setting-action" data-action="open-about"><span class="setting-copy"><b>Confidentialité et crédits</b><small>Données du classement, confidentialité</small></span><span class="setting-go"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg></span></button>
+          </section>
+
+          <p class="settings-about"><b>PULSE GRID</b> · version <span id="settings-version">4.0</span><br /><span id="settings-summary"></span></p>
+        </div>
+      </section>
+
+      <section id="screen-trophies" class="screen" aria-labelledby="trophies-title">
+        <header class="subpage-topbar"><button class="icon-button" data-route="home" aria-label="Retour"><svg class="ico" aria-hidden="true"><use href="#i-back"/></svg></button><div><div class="eyebrow">SUCCÈS</div><h1 id="trophies-title">Trophées</h1></div><div class="header-symbol"><svg class="ico" aria-hidden="true"><use href="#i-trophy"/></svg></div></header>
+        <div class="page-content subpage-content"><div id="trophies-content"></div></div>
+      </section>
+
+      <section id="screen-leaderboard" class="screen" aria-labelledby="leaderboard-title">
+        <header class="subpage-topbar"><button class="icon-button" data-route="home" aria-label="Retour au menu"><svg class="ico" aria-hidden="true"><use href="#i-back"/></svg></button><div><div class="eyebrow">MODE CLASSIC</div><h1 id="leaderboard-title">Classement</h1></div><div class="header-symbol"><svg class="ico" aria-hidden="true"><use href="#i-crown"/></svg></div></header>
+        <div class="page-content subpage-content"><div id="leaderboard-content"></div></div>
+      </section>
+
+      <section id="screen-shapes" class="screen" aria-labelledby="shapes-title">
+        <header class="subpage-topbar"><button class="icon-button" data-route="home"><svg class="ico" aria-hidden="true"><use href="#i-back"/></svg></button><div><div class="eyebrow">MODE DE JEU</div><h1 id="shapes-title">Shapes</h1></div><div class="header-symbol"><svg class="ico" aria-hidden="true"><use href="#i-shapes"/></svg></div></header>
+        <div class="page-content subpage-content"><div id="shapes-content"></div></div>
+      </section>
+
+      <section id="screen-shop" class="screen" aria-labelledby="shop-title">
+        <header class="subpage-topbar"><button class="icon-button" data-route="home"><svg class="ico" aria-hidden="true"><use href="#i-back"/></svg></button><div><div class="eyebrow">COSMÉTIQUES ET BONUS</div><h1 id="shop-title">Boutique</h1></div><div class="currency-pill"><span class="coin-icon"><svg class="ico" aria-hidden="true"><use href="#i-coin"/></svg></span><strong id="shop-coins">0</strong></div></header>
+        <div class="page-content subpage-content">
+          <div class="shop-tabs"><button class="tab-button active" data-shop-tab="themes">Thèmes</button><button class="tab-button" data-shop-tab="skins">Fragments</button><button class="tab-button" data-shop-tab="boards">Plateaux</button><button class="tab-button" data-shop-tab="effects">Impulsions</button><button class="tab-button" data-shop-tab="boosters">Bonus</button></div>
+          <div id="shop-content" class="catalog-grid"></div>
+        </div>
+      </section>
+
+      <section id="screen-collection" class="screen" aria-labelledby="collection-title">
+        <header class="subpage-topbar"><button class="icon-button" data-route="home"><svg class="ico" aria-hidden="true"><use href="#i-back"/></svg></button><div><div class="eyebrow">PERSONNALISATION</div><h1 id="collection-title">Atelier</h1></div><div class="header-symbol"><svg class="ico" aria-hidden="true"><use href="#i-layers"/></svg></div></header>
+        <div class="page-content subpage-content"><div id="collection-content"></div></div>
+      </section>
+
+      <section id="screen-missions" class="screen" aria-labelledby="missions-title">
+        <header class="subpage-topbar"><button class="icon-button" data-route="home"><svg class="ico" aria-hidden="true"><use href="#i-back"/></svg></button><div><div class="eyebrow">RÉCOMPENSES QUOTIDIENNES</div><h1 id="missions-title">Missions</h1></div><div class="header-symbol"><svg class="ico" aria-hidden="true"><use href="#i-tasks"/></svg></div></header>
+        <div class="page-content subpage-content">
+          <article class="mission-intro"><div class="mission-intro-icon"><svg class="ico" aria-hidden="true"><use href="#i-tasks"/></svg></div><div><span class="eyebrow accent">RENOUVELÉES À MINUIT</span><h2>Missions du jour</h2><p>Termine-les pour gagner des PulseCoins.</p></div></article>
+          <div id="missions-content" class="missions-list"></div>
+        </div>
+      </section>
+
+      <section id="screen-progression" class="screen" aria-labelledby="progression-title">
+        <header class="subpage-topbar"><button class="icon-button" data-route="home"><svg class="ico" aria-hidden="true"><use href="#i-back"/></svg></button><div><div class="eyebrow">RÉCOMPENSES DE NIVEAU</div><h1 id="progression-title">Progression</h1></div><div class="header-symbol progression-header-symbol"><svg class="ico" aria-hidden="true"><use href="#i-star"/></svg></div></header>
+        <div class="page-content subpage-content"><div id="progression-content"></div></div>
+      </section>
+
+      <section id="screen-stats" class="screen" aria-labelledby="stats-title">
+        <header class="subpage-topbar"><button class="icon-button" data-route="home"><svg class="ico" aria-hidden="true"><use href="#i-back"/></svg></button><div><div class="eyebrow">RÉSUMÉ</div><h1 id="stats-title">Statistiques</h1></div><div class="header-symbol"><svg class="ico" aria-hidden="true"><use href="#i-chart"/></svg></div></header>
+        <div class="page-content subpage-content"><div id="stats-content"></div></div>
+      </section>
+    </main>
+
+    <nav id="bottom-nav" class="bottom-nav" aria-label="Navigation principale">
+      <button data-route="home" class="nav-item active"><span><svg class="ico" aria-hidden="true"><use href="#i-home"/></svg></span><small>Accueil</small></button>
+      <button data-route="shop" class="nav-item"><span><svg class="ico" aria-hidden="true"><use href="#i-shop"/></svg></span><small>Boutique</small></button>
+      <button data-route="missions" class="nav-item"><span><svg class="ico" aria-hidden="true"><use href="#i-tasks"/></svg></span><small>Missions</small></button>
+      <button data-route="collection" class="nav-item"><span><svg class="ico" aria-hidden="true"><use href="#i-layers"/></svg></span><small>Atelier</small></button>
+    </nav>
+
+    <div id="modal-backdrop" class="modal-backdrop" aria-hidden="true">
+      <div id="modal-card" class="modal-card" role="dialog" aria-modal="true"></div>
+    </div>
+    <div id="toast" class="toast" role="status"></div>
+    <div id="reward-layer" class="reward-layer" aria-hidden="true"></div>
+  </div>
+  <script src="game.js"></script>
+</body>
+</html>
