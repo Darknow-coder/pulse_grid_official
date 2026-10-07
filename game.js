@@ -637,7 +637,7 @@
     initNative();
     try { onlineInit(); } catch (_) { /* l'online ne doit jamais bloquer le lancement */ }
     try { initUiPolish(); } catch (_) { /* purement décoratif */ }
-    setTimeout(() => $('#boot-screen')?.classList.add('done'), 650);
+    setTimeout(() => $('#boot-screen')?.classList.add('done'), Math.max(650, 1750 - (typeof performance !== 'undefined' ? performance.now() : 0)));
   }
 
   // Petit « pop » sur les chiffres qui changent (score, pièces, niveau). Purement visuel.
@@ -1378,7 +1378,7 @@
       const count = profile.inventory[def.id] || 0;
       const active = state.activeBooster === def.id;
       const disabled = count <= 0 || state.resolving || !state.gameActive;
-      return `<button class="booster-button booster-${def.id}${active ? ' active' : ''}" data-action="use-booster" data-booster-id="${def.id}" ${disabled && !active ? 'disabled' : ''} aria-label="${def.label}, ${count} disponible${count > 1 ? 's' : ''}"><span class="booster-symbol">${def.icon}</span><span class="booster-info"><b>${active ? 'ANNULER' : def.label}</b><small>${active ? def.active : def.short}</small></span><strong class="booster-count">${count}</strong></button>`;
+      return `<button class="booster-button booster-${def.id}${active ? ' active' : ''}" data-action="use-booster" data-booster-id="${def.id}" ${disabled && !active ? 'disabled' : ''} aria-label="${def.label}, ${count} disponible${count > 1 ? 's' : ''}"><span class="booster-symbol">${boosterIcon(def.id)}</span><span class="booster-info"><b>${active ? 'ANNULER' : def.label}</b><small>${active ? def.active : def.short}</small></span><strong class="booster-count">${count}</strong></button>`;
     }).join('');
   }
 
@@ -1887,7 +1887,7 @@
       const statusClass = claimed ? 'is-claimed' : unlocked ? 'is-available' : 'is-locked';
       const stateLabel = claimed ? '✓ RÉCUPÉRÉE' : current ? 'NIVEAU ACTUEL' : unlocked ? 'RÉCOMPENSE DISPONIBLE' : 'VERROUILLÉ';
       const action = claimed ? '<span class="progression-claimed">RÉCUPÉRÉE</span>' : unlocked ? `<button class="progression-claim" data-action="claim-progression" data-level="${level}">RÉCUPÉRER</button>` : `<span class="progression-locked">À venir</span>`;
-      return `<article class="progression-node ${statusClass}${current ? ' is-current' : ''}${milestone ? ' is-milestone' : ''}" data-progression-level="${level}"><div class="progression-rail"><span class="progression-dot">${claimed ? '✓' : milestone ? '★' : level}</span></div><div class="progression-card"><div class="progression-card-top"><span class="progression-level">NIVEAU ${level}</span><span class="progression-state">${stateLabel}</span></div><div class="progression-reward"><span class="progression-reward-icon">${reward.icon || '◆'}</span><div><strong>${progressionRewardLabel(reward)}</strong><small>${reward.title || progressionRewardDetail(reward)}${milestone ? ' · MILESTONE' : ''}</small></div></div>${action}</div></article>`;
+      return `<article class="progression-node ${statusClass}${current ? ' is-current' : ''}${milestone ? ' is-milestone' : ''}" data-progression-level="${level}"><div class="progression-rail"><span class="progression-dot">${claimed ? '✓' : milestone ? '★' : level}</span></div><div class="progression-card"><div class="progression-card-top"><span class="progression-level">NIVEAU ${level}</span><span class="progression-state">${stateLabel}</span></div><div class="progression-reward"><span class="progression-reward-icon thumb-wrap">${rewardThumbHTML(reward)}</span><div><strong>${progressionRewardLabel(reward)}</strong><small>${reward.title || progressionRewardDetail(reward)}${milestone ? ' · MILESTONE' : ''}</small></div></div>${action}</div></article>`;
     }).join('');
     target.innerHTML = `<article class="progression-overview"><div class="progression-overview-top"><div><span class="eyebrow accent">ROUTE DE PROGRESSION</span><h2>Niveau ${profile.level}</h2><p>${formatNumber(profile.xp)} / ${formatNumber(nextXp)} XP avant le niveau ${profile.level + 1}</p></div><button class="progression-center" data-action="progression-current">MON NIVEAU</button></div><div class="progression-xp"><span style="width:${xpRatio}%"></span></div><div class="progression-next"><span>${available ? `${available} récompense${available > 1 ? 's' : ''} disponible${available > 1 ? 's' : ''}` : 'PROCHAINE RÉCOMPENSE'}</span><strong>NIVEAU ${nextReward.level} · ${progressionRewardDetail(nextReward)}</strong></div></article><div class="progression-track">${nodes}</div>`;
   }
@@ -2016,6 +2016,37 @@
     return `<div class="fxp fx-${effectId}" style="--fy:${rowCenterPercent}%">${parts.join('')}</div>`;
   }
 
+  /* ===== Icônes vectorielles et vignettes (boutique, progression, packs) ===== */
+  const svgIcon = name => `<svg class="ico" aria-hidden="true"><use href="#i-${name}"/></svg>`;
+  const BOOSTER_ICON = { hammer: 'hammer', reroll: 'reroll', 'pulse-core': 'bolt', scanner: 'scanner', 'line-breaker': 'blade' };
+  const FX_ICON = { burst: 'fx-burst', ring: 'fx-ring', confetti: 'fx-confetti', spark: 'fx-spark', nova: 'fx-nova', magnet: 'fx-magnet' };
+  const MISSION_ICON = { score: 'trend', lines: 'rows', combo: 'flame', games: 'play', pieces: 'shapes', pulse: 'bolt' };
+  const boosterIcon = id => svgIcon(BOOSTER_ICON[id] || 'sparkle');
+  const DEMO3 = [[0, -1, 1], [-1, 2, -1], [3, -1, 4]];
+  function skinThumbHTML(skinId) {
+    const skin = findCatalog('skins', skinId); const board = findCatalog('boards', 'night');
+    const cells = [0, 2, 3].map(index => { const color = paletteColor(skin, index); return `<i class="cell filled" style="--piece-primary:${color.primary};--piece-secondary:${color.secondary};--piece-soft:${color.soft}"></i>`; }).join('');
+    return `<span class="thumb-skin" data-skin="${skin.id}" style="${themeVarsStyle(skin, board)}">${cells}</span>`;
+  }
+  function boardThumbHTML(boardId, skinId) {
+    return `<span class="thumb-board">${miniBoardHTML(skinId || profile.equipped.skin, boardId, { size: 3, layout: DEMO3 })}</span>`;
+  }
+  function rewardThumbHTML(reward) {
+    if (reward.type === 'skin') return skinThumbHTML(reward.id);
+    if (reward.type === 'board') return boardThumbHTML(reward.id);
+    if (reward.type === 'effect') return `<span class="rw-thumb rw-fx" style="--fa:${(FX_COLORS[reward.id] || FX_COLORS.burst)[0]}">${svgIcon(FX_ICON[reward.id] || 'sparkle')}</span>`;
+    if (reward.type === 'booster') return `<span class="rw-thumb rw-booster">${boosterIcon(reward.id)}</span>`;
+    if (reward.type === 'pack') return `<span class="rw-thumb rw-pack">${svgIcon('pack')}</span>`;
+    return `<span class="rw-thumb rw-coin">${svgIcon('coin')}</span>`;
+  }
+  function heroThumbHTML(tab) {
+    const eq = profile.equipped;
+    if (tab === 'skins') return skinThumbHTML(eq.skin);
+    if (tab === 'boards') return boardThumbHTML(eq.board);
+    if (tab === 'effects') return svgIcon(FX_ICON[eq.effect] || 'fx-nova');
+    return svgIcon('bolt');
+  }
+
   function themeVarsStyle(skin, board) {
     return `--skin-primary:${skin.primary};--skin-secondary:${skin.secondary};--skin-soft:${skin.soft};--skin-contrast:${skin.contrast};--board-shell:${board.shell};--cell-bg:${board.cell};--board-glow:${board.glow};`;
   }
@@ -2111,7 +2142,7 @@
 
   function renderThemeShop() {
     const complete = THEMES.filter(theme => themeInfo(theme).complete).length;
-    return `<section class="shop-hero shop-hero-themes"><div class="shop-hero-icon">❖</div><div class="shop-hero-copy"><span class="eyebrow accent">COLLECTIONS ASSORTIES</span><h2>Thèmes assortis</h2><p>Fragments, plateau et impulsion pensés ensemble, −25% par rapport à l’unité.</p></div><div class="shop-hero-stat"><strong>${complete}/${THEMES.length}</strong><small>complets</small></div></section><div class="theme-list">${THEMES.map(themeCardHTML).join('')}</div>`;
+    return `<section class="shop-hero shop-hero-themes"><div class="shop-hero-icon thumb-hero">${svgIcon('sparkle')}</div><div class="shop-hero-copy"><span class="eyebrow accent">COLLECTIONS ASSORTIES</span><h2>Thèmes assortis</h2><p>Fragments, plateau et impulsion pensés ensemble, −25% par rapport à l’unité.</p></div><div class="shop-hero-stat"><strong>${complete}/${THEMES.length}</strong><small>complets</small></div></section><div class="theme-list">${THEMES.map(themeCardHTML).join('')}</div>`;
   }
 
   /* ----- Aperçu en jeu (fenêtre) ----- */
@@ -2209,22 +2240,22 @@
     const key = state.shopTab.slice(0, -1);
     const equipped = findCatalog(state.shopTab, profile.equipped[key]);
     const owned = items.filter(item => isUnlocked(state.shopTab, item.id)).length;
-    target.innerHTML = `<section class="shop-hero shop-hero-${state.shopTab}"><div class="shop-hero-icon">${copy.icon}</div><div class="shop-hero-copy"><span class="eyebrow accent">${copy.kicker}</span><h2>${copy.title}</h2><p>${copy.detail}</p></div><div class="shop-hero-stat"><strong>${owned}/${items.length}</strong><small>possédés</small></div></section><div class="shop-current"><span>ÉQUIPÉ</span><strong>${equipped.name}</strong><small>${SHOP_META[state.shopTab]?.[equipped.id]?.note || equipped.description}</small></div><div class="shop-section-label">COLLECTION ${owned === items.length ? 'COMPLÈTE' : `${items.length - owned} À DÉBLOQUER`}</div><div class="cos-grid">${items.map(item => renderCatalogCard(state.shopTab, item)).join('')}</div>`;
+    target.innerHTML = `<section class="shop-hero shop-hero-${state.shopTab}"><div class="shop-hero-icon thumb-hero hero-${state.shopTab}">${heroThumbHTML(state.shopTab)}</div><div class="shop-hero-copy"><span class="eyebrow accent">${copy.kicker}</span><h2>${copy.title}</h2><p>${copy.detail}</p></div><div class="shop-hero-stat"><strong>${owned}/${items.length}</strong><small>possédés</small></div></section><div class="shop-current"><span>ÉQUIPÉ</span><strong>${equipped.name}</strong><small>${SHOP_META[state.shopTab]?.[equipped.id]?.note || equipped.description}</small></div><div class="shop-section-label">COLLECTION ${owned === items.length ? 'COMPLÈTE' : `${items.length - owned} À DÉBLOQUER`}</div><div class="cos-grid">${items.map(item => renderCatalogCard(state.shopTab, item)).join('')}</div>`;
   }
 
   function renderBoosterShop() {
     const packs = CATALOG.packs.map(pack => {
       const rewardCount = Object.values(pack.contents).reduce((sum, count) => sum + count, 0);
-      return `<article class="catalog-card pack-card" data-pack-id="${pack.id}"><div class="catalog-preview pack-preview"><span>${pack.icon}</span><em>${pack.badge || 'PACK'}</em><b class="pack-question">?</b></div><div class="pack-kicker">${pack.badge || 'PACK DE BOOSTERS'} <b>${pack.savings || ''}</b></div><h3>${pack.name}</h3><p>${pack.description}</p><div class="pack-mystery"><span>?</span><div><strong>CONTENU MYSTÈRE</strong><small>${rewardCount} bonus garantis · révélés à l’ouverture</small></div></div><div class="pack-value"><span>VALEUR RUN</span><strong>${pack.savings || 'STOCK'}</strong></div><button class="item-action buy" data-action="buy-pack">◆ ${pack.price}</button></article>`;
+      return `<article class="catalog-card pack-card" data-pack-id="${pack.id}"><div class="catalog-preview pack-preview"><span>${svgIcon('pack')}</span><em>${pack.badge || 'PACK'}</em><b class="pack-question">?</b></div><div class="pack-kicker">${pack.badge || 'PACK DE BOOSTERS'} <b>${pack.savings || ''}</b></div><h3>${pack.name}</h3><p>${pack.description}</p><div class="pack-mystery"><span>?</span><div><strong>CONTENU MYSTÈRE</strong><small>${rewardCount} bonus garantis · révélés à l’ouverture</small></div></div><div class="pack-value"><span>VALEUR RUN</span><strong>${pack.savings || 'STOCK'}</strong></div><button class="item-action buy" data-action="buy-pack">◆ ${pack.price}</button></article>`;
     }).join('');
     const boosters = CATALOG.boosters.map(item => renderBoosterShopCard(item)).join('');
-    return `<div class="booster-shop"><section class="shop-hero shop-hero-boosters"><div class="shop-hero-icon">\u26A1\uFE0E</div><div class="shop-hero-copy"><span class="eyebrow accent">OUTILS DE RUN</span><h2>Bonus de partie</h2><p>Chaque bonus a un moment précis où il peut sauver ta grille. Pas de décoration inutile.</p></div><div class="shop-hero-stat"><strong>${Object.values(profile.inventory).reduce((sum, count) => sum + (Number(count) || 0), 0)}</strong><small>en stock</small></div></section><div class="booster-shop-intro"><div class="booster-shop-icon">◎</div><div><span class="eyebrow accent">CONSOMMABLES</span><strong>Choisis ton style de secours.</strong><small>Précision, information, tempo ou ouverture : les packs combinent des usages différents.</small></div></div><div class="shop-section-label">PACKS AVANTAGEUX</div><div class="catalog-grid pack-grid">${packs}</div><div class="shop-section-label">À L'UNITÉ · CHOISIS TON OUTIL</div><div class="catalog-grid booster-grid">${boosters}</div></div>`;
+    return `<div class="booster-shop"><section class="shop-hero shop-hero-boosters"><div class="shop-hero-icon thumb-hero">${svgIcon('bolt')}</div><div class="shop-hero-copy"><span class="eyebrow accent">OUTILS DE RUN</span><h2>Bonus de partie</h2><p>Chaque bonus a un moment précis où il peut sauver ta grille. Pas de décoration inutile.</p></div><div class="shop-hero-stat"><strong>${Object.values(profile.inventory).reduce((sum, count) => sum + (Number(count) || 0), 0)}</strong><small>en stock</small></div></section><div class="booster-shop-intro"><div class="booster-shop-icon">${svgIcon('target')}</div><div><span class="eyebrow accent">CONSOMMABLES</span><strong>Choisis ton style de secours.</strong><small>Précision, information, tempo ou ouverture : les packs combinent des usages différents.</small></div></div><div class="shop-section-label">PACKS AVANTAGEUX</div><div class="catalog-grid pack-grid">${packs}</div><div class="shop-section-label">À L'UNITÉ · CHOISIS TON OUTIL</div><div class="catalog-grid booster-grid">${boosters}</div></div>`;
   }
 
   function renderBoosterShopCard(item) {
     const count = profile.inventory[item.id] || 0;
     const rarity = item.id === 'line-breaker' || item.id === 'pulse-core' ? 'ÉPIQUE' : item.id === 'scanner' || item.id === 'hammer' ? 'RARE' : 'TACTIQUE';
-    return `<article class="catalog-card booster-card booster-shop-card" data-booster-id="${item.id}"><div class="catalog-preview booster-preview"><span>${item.icon}</span><em>${item.tag}</em></div><div class="product-head"><span class="product-rarity" data-rarity="${rarity}">${rarity}</span><span class="product-tag">${item.tag}</span></div><div class="booster-card-head"><h3>${item.name}</h3><strong>${count}</strong></div><p>${item.description}</p><div class="booster-how"><span>UTILISATION</span>${item.howTo}</div><div class="inventory-line"><span>EN STOCK</span><b>${count}</b></div><button class="item-action buy" data-action="buy-booster">◆ ${item.price}</button></article>`;
+    return `<article class="catalog-card booster-card booster-shop-card" data-booster-id="${item.id}"><div class="catalog-preview booster-preview"><span>${boosterIcon(item.id)}</span><em>${item.tag}</em></div><div class="product-head"><span class="product-rarity" data-rarity="${rarity}">${rarity}</span><span class="product-tag">${item.tag}</span></div><div class="booster-card-head"><h3>${item.name}</h3><strong>${count}</strong></div><p>${item.description}</p><div class="booster-how"><span>UTILISATION</span>${item.howTo}</div><div class="inventory-line"><span>EN STOCK</span><b>${count}</b></div><button class="item-action buy" data-action="buy-booster">◆ ${item.price}</button></article>`;
   }
 
   function renderCollection() {
@@ -2336,7 +2367,7 @@
       .sort((a, b) => packRarityOf(a.id).rank - packRarityOf(b.id).rank || a.order - b.order)
       .map(item => item.id);
     const total = ordered.length;
-    const face = `<div class="pc-face"><span class="pc-face-icon">${pack.icon}</span><b>${pack.badge || 'PACK'}</b><em>PULSE GRID</em><i class="pc-shine"></i></div>`;
+    const face = `<div class="pc-face"><span class="pc-face-icon">${svgIcon('pack')}</span><b>${pack.badge || 'PACK'}</b><em>PULSE GRID</em><i class="pc-shine"></i></div>`;
     const root = document.createElement('div');
     root.id = 'pack-cinema';
     root.className = 'pc';
@@ -2416,7 +2447,7 @@
       cardState = 'busy';
       slot.insertAdjacentHTML('beforeend', `<div class="pc-card rar-${rarity.key} ${index === 0 ? 'enter-first' : 'enter'}"><i class="pc-aura"></i><div class="pc-float"><div class="pc-tilt"><div class="pc-card-inner">
         <div class="pc-back"><span>✦</span><small>BONUS ${index + 1} / ${total}</small></div>
-        <div class="pc-front"><i class="pc-foil"></i><span class="pc-rarity">${rarity.label}</span><div class="pc-icon-wrap"><span class="pc-icon">${booster.icon}</span></div><strong>${booster.name}</strong><small class="pc-tag">${booster.tag}</small><p>${booster.description}</p><b class="pc-plus">+1</b></div>
+        <div class="pc-front"><i class="pc-foil"></i><span class="pc-rarity">${rarity.label}</span><div class="pc-icon-wrap"><span class="pc-icon">${boosterIcon(booster.id)}</span></div><strong>${booster.name}</strong><small class="pc-tag">${booster.tag}</small><p>${booster.description}</p><b class="pc-plus">+1</b></div>
       </div></div></div></div>`);
       currentCard = slot.lastElementChild;
       updateDots();
@@ -2468,7 +2499,7 @@
       const tiles = entries.map(([id, count], index) => {
         const booster = CATALOG.boosters.find(item => item.id === id);
         const rarity = packRarityOf(id);
-        return `<div class="pc-tile rar-${rarity.key}" style="--d:${120 + index * 90}ms"><b class="t-count">×${count}</b><span class="t-icon">${booster.icon}</span><strong>${booster.name}</strong><small>${rarity.label}</small></div>`;
+        return `<div class="pc-tile rar-${rarity.key}" style="--d:${120 + index * 90}ms"><b class="t-count">×${count}</b><span class="t-icon">${boosterIcon(booster.id)}</span><strong>${booster.name}</strong><small>${rarity.label}</small></div>`;
       }).join('');
       summary.innerHTML = `<span class="pc-sum-kicker">BUTIN DU PACK</span><h2>${pack.name}</h2><div class="pc-sum-grid">${tiles}</div><p class="pc-sum-total">${total} bonus ajoutés à ton inventaire</p><button class="pc-done" type="button">TERMINER</button>`;
       summary.scrollTop = 0;
@@ -2537,7 +2568,7 @@
     ensureMissionsForToday(profile);
     $('#missions-content').innerHTML = profile.missions.map(mission => {
       const percent = clamp(mission.progress / mission.target * 100, 0, 100); const ready = mission.progress >= mission.target && !mission.claimed;
-      return `<article class="mission-card ${mission.claimed ? 'done' : ''}" data-mission-id="${mission.id}"><div class="mission-head"><div class="mission-icon">${mission.icon}</div><div class="mission-main"><strong>${mission.title}</strong><small>${mission.detail}</small></div><div class="mission-reward">◆ ${mission.reward}</div></div><div class="mission-progress-row"><div class="mini-progress"><span style="width:${percent}%"></span></div><span class="mission-count">${Math.min(mission.progress, mission.target)} / ${mission.target}</span></div>${mission.claimed ? '<button class="claim-button" disabled>RÉCOMPENSE RÉCUPÉRÉE</button>' : `<button class="claim-button" data-action="claim-mission" ${ready ? '' : 'disabled'}>${ready ? 'RÉCUPÉRER LA RÉCOMPENSE' : 'ENCORE UN PEU'}</button>`}</article>`;
+      return `<article class="mission-card ${mission.claimed ? 'done' : ''}" data-mission-id="${mission.id}"><div class="mission-head"><div class="mission-icon">${svgIcon(MISSION_ICON[mission.type] || 'target')}</div><div class="mission-main"><strong>${mission.title}</strong><small>${mission.detail}</small></div><div class="mission-reward">◆ ${mission.reward}</div></div><div class="mission-progress-row"><div class="mini-progress"><span style="width:${percent}%"></span></div><span class="mission-count">${Math.min(mission.progress, mission.target)} / ${mission.target}</span></div>${mission.claimed ? '<button class="claim-button" disabled>RÉCOMPENSE RÉCUPÉRÉE</button>' : `<button class="claim-button" data-action="claim-mission" ${ready ? '' : 'disabled'}>${ready ? 'RÉCUPÉRER LA RÉCOMPENSE' : 'ENCORE UN PEU'}</button>`}</article>`;
     }).join('');
   }
 
@@ -2568,7 +2599,7 @@
   function openPauseModal() {
     if (!state.gameActive) { showScreen('home'); return; }
     state.paused = true;
-    openModal(`<div class="pause-icon">Ⅱ</div><span class="modal-kicker">PARTIE EN PAUSE</span><h2>Kits de bonus</h2><p>La partie est en sécurité. Reviens quand tu veux continuer à construire ta grille.</p><div class="modal-actions"><button class="secondary" data-action="go-home">ACCUEIL</button><button class="secondary" data-action="restart">RECOMMENCER</button><button class="primary" data-action="resume">CONTINUER</button></div>`);
+    openModal(`<div class="pause-icon">${svgIcon('pause')}</div><span class="modal-kicker">PARTIE EN PAUSE</span><h2>Kits de bonus</h2><p>La partie est en sécurité. Reviens quand tu veux continuer à construire ta grille.</p><div class="modal-actions"><button class="secondary" data-action="go-home">ACCUEIL</button><button class="secondary" data-action="restart">RECOMMENCER</button><button class="primary" data-action="resume">CONTINUER</button></div>`);
   }
 
   function openEndModal(reward, xpEarned, levels, levelBefore, isNewRecord, previousBest) {
@@ -3461,11 +3492,42 @@
      TUTORIEL (1re partie) — rejouable depuis les Paramètres
      ===================================================================== */
   const tutoGrid = rows => `<div class="tuto-grid" style="--tg:${rows[0].length}">${rows.map(row => [...row].map(ch => `<i class="tg-${ch === '.' ? 'e' : ch}"></i>`).join('')).join('')}</div>`;
+  // Scène animée : un fragment glisse de la main vers la grille (ou un bonus est touché), en boucle.
+  function tutoScene(spec) {
+    const P = 34; const PAD = 8; const clearRows = spec.clearRows || [];
+    const cells = spec.grid.map((row, r) => [...row].map((ch, c) => {
+      const cls = ['ts-c', ch !== '.' ? `ts-${ch}` : '', ch !== '.' && clearRows.includes(r) ? 'ts-line' : '', spec.shatter && spec.shatter[0] === r && spec.shatter[1] === c ? 'ts-shatter' : ''].filter(Boolean).join(' ');
+      return `<i class="${cls}"></i>`;
+    }).join('')).join('');
+    const flashes = clearRows.map(r => `<i class="ts-flash" style="top:${PAD + r * P - 2}px"></i>`).join('');
+    let extra = '';
+    if (spec.piece) {
+      const [tr, tc] = spec.target; const [sx, sy] = spec.start;
+      const at = (r, c) => `left:${PAD + (tc + c) * P}px;top:${PAD + (tr + r) * P}px`;
+      const own = spec.piece.cells.map(([r, c]) => `<i class="ts-pc ts-${spec.piece.color}" style="left:${c * P}px;top:${r * P}px"></i>`).join('');
+      const ghost = spec.piece.cells.map(([r, c]) => `<i class="ts-pc ts-ghost" style="${at(r, c)}"></i>`).join('');
+      const placed = spec.piece.cells.map(([r, c]) => `<i class="ts-pc ts-${spec.piece.color} ts-placed${clearRows.includes(tr + r) ? ' ts-placed-clr' : ''}" style="${at(r, c)}"></i>`).join('');
+      const hs = [sx + 9 - 17, sy + 9 - 4]; const ht = [PAD + tc * P + 15 - 17, PAD + tr * P + 15 - 4];
+      extra = `${ghost}${placed}<div class="ts-piece" style="--sx:${sx}px;--sy:${sy}px;--tx:${PAD + tc * P}px;--ty:${PAD + tr * P}px">${own}</div><svg class="ts-hand ts-hand-drag" style="--hsx:${hs[0]}px;--hsy:${hs[1]}px;--htx:${ht[0]}px;--hty:${ht[1]}px" aria-hidden="true"><use href="#i-hand"/></svg>`;
+    } else if (spec.boost) {
+      const [br, bc] = spec.shatter; const cx = PAD + bc * P + 15; const cy = PAD + br * P + 15; const bx = 8 + 25; const by = 192 + 35;
+      const boosts = ['hammer', 'scanner', 'reroll'].map((id, i) => `<span class="ts-boost${i === 0 ? ' ts-boost-on' : ''}" style="left:${8 + i * 58}px">${boosterIcon(id)}</span>`).join('');
+      extra = `${boosts}<i class="ts-ring" style="left:${cx - 15}px;top:${cy - 15}px"></i><svg class="ts-hand ts-hand-tap" style="--hbx:${bx - 17}px;--hby:${by - 4}px;--hcx:${cx - 17}px;--hcy:${cy - 4}px" aria-hidden="true"><use href="#i-hand"/></svg>`;
+    }
+    const badge = spec.badge ? `<b class="ts-badge">${spec.badge}</b>` : '';
+    return `<div class="ts"><div class="ts-grid">${cells}</div><div class="ts-tray"></div>${flashes}${extra}${badge}</div>`;
+  }
+  const TUTORIAL_SCENES = [
+    { grid: ['.....', '.aa..', '.a...', '.....', '...b.'], piece: { cells: [[0, 0], [0, 1], [1, 0]], color: 'p' }, start: [64, 200], target: [2, 3] },
+    { grid: ['.....', '.....', 'aaaa.', '.....', 'b..b.'], piece: { cells: [[0, 0]], color: 'p' }, start: [76, 214], target: [2, 4], clearRows: [2] },
+    { grid: ['.....', 'aa.aa', '.....', 'bb.bb', '.....'], piece: { cells: [[0, 0], [1, 0], [2, 0]], color: 'p' }, start: [76, 196], target: [1, 2], clearRows: [1, 3], badge: 'COMBO ×2' },
+    { grid: ['.....', '.aab.', '.aab.', '..b..', '.....'], boost: true, shatter: [1, 2] }
+  ];
   const TUTORIAL = [
-    { title: 'Glisse les fragments', text: 'Prends un fragment en bas, fais-le glisser sur la grille et relâche pour le poser. Tu peux aussi le toucher, puis toucher la grille.', art: tutoGrid(['.....', '.aa..', '.a...', '.....', '...b.']) },
-    { title: 'Complète des lignes', text: 'Une ligne ou une colonne entièrement remplie se dissout et rapporte des points. Vise les cases en surbrillance : elles sont presque complètes !', art: tutoGrid(['.....', 'xxxx.', '.....', '.....', '.....']) },
-    { title: 'Enchaîne les combos', text: 'Dissous des lignes plusieurs coups de suite pour monter le combo et charger la Pulse. Vider tout le plateau offre +500 points.', art: tutoGrid(['aaaaa', 'bbbbb', 'aa.aa', 'bb.bb', 'aa.aa']) },
-    { title: 'Bonus et Shapes', text: 'Utilise tes bonus quand tu es bloqué. Dans le mode Shapes, le plateau change de géométrie : maîtrise-le pour débloquer la forme suivante.', art: tutoGrid(['..a..', '.aaa.', 'aaaaa', '.aaa.', '..a..']) }
+    { title: 'Glisse les fragments', text: 'Prends un fragment en bas, fais-le glisser sur la grille et relâche pour le poser. Tu peux aussi le toucher, puis toucher la grille.', get art() { return tutoScene(TUTORIAL_SCENES[0]); } },
+    { title: 'Complète des lignes', text: 'Une ligne ou une colonne entièrement remplie se dissout et rapporte des points. Vise les cases en surbrillance : elles sont presque complètes !', get art() { return tutoScene(TUTORIAL_SCENES[1]); } },
+    { title: 'Enchaîne les combos', text: 'Dissous des lignes plusieurs coups de suite pour monter le combo et charger la Pulse. Vider tout le plateau offre +500 points.', get art() { return tutoScene(TUTORIAL_SCENES[2]); } },
+    { title: 'Bonus et Shapes', text: 'Utilise tes bonus quand tu es bloqué : touche le bonus, puis la case visée. Dans le mode Shapes, le plateau change de géométrie : maîtrise-le pour débloquer la forme suivante.', get art() { return tutoScene(TUTORIAL_SCENES[3]); } }
   ];
   function openTutorial(page = 0) {
     if (page >= TUTORIAL.length) { finishTutorial(); return; }
