@@ -5,7 +5,7 @@
   const GRID = 8;
   const QUEUE_SIZE = 3;
   const SAVE_KEY = 'pulse-grid-save-v1';
-  const APP_VERSION = '5.2';
+  const APP_VERSION = '6.0.1';
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
   const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
@@ -285,7 +285,17 @@
       { id: 'prism', name: 'Prism Shift', price: 520, description: 'Des gemmes taillées en facettes qui captent chaque reflet.', primary: '#f5a8ff', secondary: '#65e8ff', soft: 'rgba(186,151,255,.2)', contrast: '#160d28',
         palette: [['#ff9bd2', '#b06cff'], ['#7ff3ff', '#4a8bff'], ['#9bffb3', '#2fd6a5'], ['#fff08a', '#ffb03f'], ['#ffa8a8', '#ff4f7a'], ['#c3a8ff', '#6a6bff']] },
       { id: 'solaris', name: 'Solaris', price: 620, description: 'De l’or massif brossé, serti de rivets polis.', primary: '#ffe28a', secondary: '#ff6e89', soft: 'rgba(255,186,116,.2)', contrast: '#29130f',
-        palette: [['#fff0a0', '#e0a020'], ['#ffe27a', '#c98512'], ['#ffd2b0', '#d6703a'], ['#f4f6ff', '#a9b4d6'], ['#ffc85a', '#d4691f'], ['#ffc1b0', '#d0788a']] }
+        palette: [['#fff0a0', '#e0a020'], ['#ffe27a', '#c98512'], ['#ffd2b0', '#d6703a'], ['#f4f6ff', '#a9b4d6'], ['#ffc85a', '#d4691f'], ['#ffc1b0', '#d0788a']] },
+      { id: 'wood', name: 'Bois Massif', price: 220, description: 'Des blocs de bois chaud, avec leurs veines et leur nœud.', primary: '#e0a870', secondary: '#9a5a2a', soft: 'rgba(224,168,112,.2)', contrast: '#2a1405',
+        palette: [['#e8b878', '#9a5a2a'], ['#d99058', '#80401c'], ['#f0c890', '#b07038'], ['#c47a48', '#6a3414'], ['#e0a870', '#a0622a'], ['#b8683a', '#5a2a10']] },
+      { id: 'circuit', name: 'Circuit', price: 280, description: 'Carte électronique : pistes gravées et soudures lumineuses.', primary: '#5dff9a', secondary: '#4de0ff', soft: 'rgba(93,255,154,.2)', contrast: '#04140b',
+        palette: [['#5dff9a', '#0f3b2a'], ['#4de0ff', '#0b3144'], ['#ffd24d', '#3d3008'], ['#ff7a5d', '#40160e'], ['#b0ff5d', '#1f3a0a'], ['#ff5dd0', '#3a0f33']] },
+      { id: 'bubble', name: 'Bulles', price: 420, description: 'Des bulles irisées, légères et brillantes comme du savon.', primary: '#8fe8ff', secondary: '#ffb3e6', soft: 'rgba(143,232,255,.22)', contrast: '#07202b',
+        palette: [['#8fe8ff', '#2a8fd6'], ['#ffb3e6', '#d65ab4'], ['#b6ffd0', '#3fc98a'], ['#fff0a0', '#e0b030'], ['#c9b6ff', '#7a5ae0'], ['#ffc0a0', '#e07a50']] },
+      { id: 'obsidian', name: 'Obsidienne', price: 480, description: 'Du verre noir à l’arête lumineuse : sobre, dense, premium.', primary: '#9a8cff', secondary: '#4de3d0', soft: 'rgba(154,140,255,.22)', contrast: '#0b0b16',
+        palette: [['#9a8cff', '#2a2160'], ['#4de3d0', '#124a52'], ['#ff7aa8', '#5a1a38'], ['#ffc46b', '#5a3a12'], ['#6fb7ff', '#17325a'], ['#c58bff', '#3a1c5a']] },
+      { id: 'marble', name: 'Marbre Royal', price: 640, description: 'Du marbre poli veiné d’or et de gris, digne d’un palais.', primary: '#f6f3ee', secondary: '#c9b27a', soft: 'rgba(246,243,238,.22)', contrast: '#241d12',
+        palette: [['#f6f3ee', '#b8b2a8'], ['#eef2f7', '#9fb0c8'], ['#f8efe6', '#c8a690'], ['#eaf4ee', '#8fb59f'], ['#f3eaf4', '#b79fc2'], ['#f7f1e0', '#c9b27a']] }
     ],
     boards: [
       { id: 'night', name: 'Nuit profonde', price: 0, description: 'Le plateau original de Pulse Grid.', shell: '#182846', cell: '#263b5d', glow: 'rgba(101,232,208,.2)', preview: '#203452' },
@@ -294,7 +304,12 @@
       { id: 'sunset', name: 'Synthwave', price: 380, description: 'Un coucher de soleil rétro-futuriste sous la grille.', shell: '#3a1170', cell: 'rgba(26,8,56,.66)', glow: 'rgba(255,92,160,.34)', preview: '#4a1685' },
       { id: 'nebula', name: 'Nébuleuse', price: 400, description: 'Un ciel d’étoiles et de gaz cosmiques derrière chaque case.', shell: '#2a2550', cell: 'rgba(40,30,92,.62)', glow: 'rgba(224,154,255,.3)', preview: '#3a3263' },
       { id: 'gridline', name: 'Gridline', price: 520, description: 'Une grille de néon turquoise, tracée au laser.', shell: '#071e26', cell: 'rgba(8,38,46,.92)', glow: 'rgba(101,232,208,.36)', preview: '#164149' },
-      { id: 'void', name: 'Void', price: 600, description: 'Un vortex violet qui aspire la lumière de la grille.', shell: '#100a20', cell: 'rgba(20,11,40,.88)', glow: 'rgba(190,110,255,.4)', preview: '#26183e' }
+      { id: 'void', name: 'Void', price: 600, description: 'Un vortex violet qui aspire la lumière de la grille.', shell: '#100a20', cell: 'rgba(20,11,40,.88)', glow: 'rgba(190,110,255,.4)', preview: '#26183e' },
+      { id: 'ocean', name: 'Abysses', price: 280, description: 'Le fond de l’océan, ses bulles et sa lumière bleutée.', shell: '#0a2a44', cell: 'rgba(10,70,110,.62)', glow: 'rgba(80,190,255,.32)', preview: '#0f3a5c' },
+      { id: 'forest', name: 'Forêt', price: 300, description: 'Une clairière verte percée de rayons de soleil.', shell: '#10301e', cell: 'rgba(20,80,45,.62)', glow: 'rgba(120,255,160,.26)', preview: '#1b4a2e' },
+      { id: 'paper', name: 'Cahier', price: 420, description: 'Une page quadrillée avec sa marge rouge. Clair et reposant.', shell: '#f1e9d2', cell: 'rgba(110,140,190,.16)', glow: 'rgba(255,255,255,.2)', preview: '#e8dfc4' },
+      { id: 'volcano', name: 'Volcan', price: 460, description: 'Une coulée de lave qui rougeoie sous chaque case.', shell: '#1a0a0a', cell: 'rgba(55,16,12,.82)', glow: 'rgba(255,110,40,.42)', preview: '#3a140c' },
+      { id: 'polar', name: 'Aurore Boréale', price: 560, description: 'Des rubans d’aurore verts et violets dans la nuit polaire.', shell: '#08182a', cell: 'rgba(10,34,56,.7)', glow: 'rgba(120,255,200,.36)', preview: '#0f2a44' }
     ],
     effects: [
       { id: 'burst', name: 'Burst', price: 0, description: 'Éclats géométriques à chaque ligne.', icon: '✦' },
@@ -302,7 +317,12 @@
       { id: 'confetti', name: 'Confettis', price: 320, description: 'Une explosion de confettis pour fêter chaque grand coup.', icon: '·✦·' },
       { id: 'spark', name: 'Étincelles', price: 430, description: 'Des traînées dorées qui fusent comme un feu d’artifice.', icon: '⁕' },
       { id: 'nova', name: 'Nova', price: 550, description: 'Un éclair blanc, une onde de choc : la ligne devient supernova.', icon: '✺' },
-      { id: 'magnet', name: 'Magnétisme', price: 600, description: 'Les débris sont aspirés en spirale vers un cœur lumineux.', icon: '◉' }
+      { id: 'magnet', name: 'Magnétisme', price: 600, description: 'Les débris sont aspirés en spirale vers un cœur lumineux.', icon: '◉' },
+      { id: 'sakura', name: 'Pétales', price: 260, description: 'Une pluie de pétales de cerisier qui tourbillonnent.', icon: '✿' },
+      { id: 'snow', name: 'Neige', price: 280, description: 'Des flocons légers qui retombent doucement sur la grille.', icon: '❄' },
+      { id: 'hearts', name: 'Cœurs', price: 380, description: 'Des cœurs qui s’envolent à chaque ligne dissoute.', icon: '♥' },
+      { id: 'stars', name: 'Étoiles', price: 420, description: 'Des étoiles dorées jaillissent en gerbe autour de la ligne.', icon: '★' },
+      { id: 'lightning', name: 'Foudre', price: 640, description: 'Des éclairs électriques zèbrent la ligne avant qu’elle ne disparaisse.', icon: '⚡' }
     ],
     boosters: [
       { id: 'hammer', name: 'Éclateur', price: 75, description: 'Retire un carré précis sans casser ton rythme.', icon: '⌁', tag: 'PRÉCISION', howTo: 'Active puis touche un carré occupé.' },
@@ -636,6 +656,7 @@
     bindEvents();
     initNative();
     try { onlineInit(); } catch (_) { /* l'online ne doit jamais bloquer le lancement */ }
+    try { startDealTicker(); } catch (_) { /* décor seulement */ }
     try { initUiPolish(); } catch (_) { /* purement décoratif */ }
     setTimeout(() => $('#boot-screen')?.classList.add('done'), Math.max(650, 1750 - (typeof performance !== 'undefined' ? performance.now() : 0)));
   }
@@ -771,13 +792,17 @@
       case 'import-save': $('#import-file')?.click(); break;
       case 'reset-classic': case 'reset-shapes': case 'reset-all': askReset(action.slice(6)); break;
       case 'confirm-reset': doReset(event.target.closest('[data-scope]')?.dataset.scope); break;
+      case 'skip-name': skipFirstName(); break;
+      case 'delete-online': askDeleteOnline(); break;
+      case 'confirm-delete-online': confirmDeleteOnline(); break;
       case 'lb-edit-name': playSfx('button'); startNameEdit(); break;
       case 'lb-cancel-name': playSfx('button'); cancelNameEdit(); break;
       case 'lb-retry': playSfx('button'); loadLeaderboard(); break;
       case 'claim-daily': claimDaily(); break;
       case 'claim-mission': claimMission(event.target.closest('[data-mission-id]')?.dataset.missionId); break;
       case 'buy-item': buyItem(event.target.closest('[data-item]')?.dataset.category, event.target.closest('[data-item]')?.dataset.item); break;
-      case 'buy-booster': buyBooster(event.target.closest('[data-booster-id]')?.dataset.boosterId); break;
+      case 'buy-booster': buyBooster(event.target.closest('[data-booster-id]')?.dataset.boosterId, Number(event.target.closest('[data-qty]')?.dataset.qty) || 1); break;
+      case 'buy-chest': buyChest(event.target.closest('[data-chest]')?.dataset.chest); break;
       case 'buy-pack': buyPack(event.target.closest('[data-pack-id]')?.dataset.packId); break;
       case 'preview-item': { const card = event.target.closest('[data-item]'); playSfx('button'); vibrate(8); openCosmeticPreview('item', card?.dataset.category, card?.dataset.item); break; }
       case 'preview-theme': { const card = event.target.closest('[data-theme]'); playSfx('button'); vibrate(8); openCosmeticPreview('theme', null, card?.dataset.theme); break; }
@@ -1927,7 +1952,7 @@
     $('#home-progression-next').textContent = progressionLabel;
     const available = profile.missions.filter(m => m.progress >= m.target && !m.claimed).length; $('#home-mission-count').textContent = available ? `${available} à réclamer` : 'Défis du jour';
     const mission = profile.missions.find(m => !m.claimed) || profile.missions[0];
-    renderShapesHome(); renderHomeExtras(); renderTrophyCount(); renderLeaderboardTeaser();
+    renderShapesHome(); renderHomeExtras(); renderTrophyCount(); renderLeaderboardTeaser(); try { renderShopTeaser(); } catch (_) { /* décor seulement */ }
     if (mission) { $('#home-mission-title').textContent = mission.title; $('#home-mission-fill').style.width = `${clamp(mission.progress / mission.target * 100, 0, 100)}%`; }
   }
 
@@ -1941,7 +1966,12 @@
       lime: { rarity: 'ÉPIQUE', tag: 'GELÉE', note: 'Bonbons rebondis, reflets mouillés.' },
       violet: { rarity: 'ÉPIQUE', tag: 'NÉON', note: 'Contours lumineux, cœur électrique.' },
       prism: { rarity: 'MYTHIQUE', tag: 'GEMME', note: 'Facettes taillées qui captent la lumière.' },
-      solaris: { rarity: 'MYTHIQUE', tag: 'OR MASSIF', note: 'Plaques d’or brossé, rivets polis.' }
+      solaris: { rarity: 'MYTHIQUE', tag: 'OR MASSIF', note: 'Plaques d’or brossé, rivets polis.' },
+      wood: { rarity: 'RARE', tag: 'BOIS', note: 'Veines chaudes et petit nœud sculpté.' },
+      circuit: { rarity: 'RARE', tag: 'ÉLECTRONIQUE', note: 'Pistes gravées, soudures qui brillent.' },
+      bubble: { rarity: 'ÉPIQUE', tag: 'BULLE', note: 'Sphères irisées, reflets de savon.' },
+      obsidian: { rarity: 'ÉPIQUE', tag: 'VERRE NOIR', note: 'Arête lumineuse sur fond sombre.' },
+      marble: { rarity: 'MYTHIQUE', tag: 'MARBRE', note: 'Pierre polie, veines dorées.' }
     },
     boards: {
       night: { rarity: 'ORIGINAL', tag: 'CLASSIQUE', note: 'Le plateau Pulse Grid.' },
@@ -1950,7 +1980,12 @@
       sunset: { rarity: 'ÉPIQUE', tag: 'SYNTHWAVE', note: 'Dégradé coucher de soleil, halo rose.' },
       nebula: { rarity: 'ÉPIQUE', tag: 'COSMOS', note: 'Étoiles et gaz cosmiques en fond.' },
       gridline: { rarity: 'MYTHIQUE', tag: 'NÉON GRID', note: 'Cases tracées au laser turquoise.' },
-      void: { rarity: 'MYTHIQUE', tag: 'VORTEX', note: 'Vortex violet, cases sombres cerclées de lumière.' }
+      void: { rarity: 'MYTHIQUE', tag: 'VORTEX', note: 'Vortex violet, cases sombres cerclées de lumière.' },
+      ocean: { rarity: 'RARE', tag: 'OCÉAN', note: 'Bulles et lumière du fond marin.' },
+      forest: { rarity: 'RARE', tag: 'NATURE', note: 'Clairière et rayons de soleil.' },
+      paper: { rarity: 'ÉPIQUE', tag: 'CAHIER', note: 'Quadrillage et marge rouge, plateau clair.' },
+      volcano: { rarity: 'ÉPIQUE', tag: 'LAVE', note: 'Lave incandescente sous la grille.' },
+      polar: { rarity: 'MYTHIQUE', tag: 'AURORE', note: 'Rubans d’aurore boréale en mouvement.' }
     },
     effects: {
       burst: { rarity: 'ORIGINAL', tag: 'ÉCLAT', note: 'Le feedback Pulse Grid.' },
@@ -1958,7 +1993,12 @@
       confetti: { rarity: 'ÉPIQUE', tag: 'FÊTE', note: 'Pluie de confettis multicolores.' },
       spark: { rarity: 'ÉPIQUE', tag: 'FEU D’ARTIFICE', note: 'Traînées dorées nerveuses.' },
       nova: { rarity: 'MYTHIQUE', tag: 'SUPERNOVA', note: 'Flash blanc et onde de choc.' },
-      magnet: { rarity: 'MYTHIQUE', tag: 'TROU NOIR', note: 'Aspiration en spirale vers le centre.' }
+      magnet: { rarity: 'MYTHIQUE', tag: 'TROU NOIR', note: 'Aspiration en spirale vers le centre.' },
+      sakura: { rarity: 'RARE', tag: 'PÉTALES', note: 'Doux, poétique, tourbillonnant.' },
+      snow: { rarity: 'RARE', tag: 'NEIGE', note: 'Flocons qui retombent en douceur.' },
+      hearts: { rarity: 'ÉPIQUE', tag: 'AMOUR', note: 'Des cœurs qui s’envolent.' },
+      stars: { rarity: 'ÉPIQUE', tag: 'ÉTOILES', note: 'Gerbe d’étoiles dorées.' },
+      lightning: { rarity: 'MYTHIQUE', tag: 'ORAGE', note: 'Éclairs électriques sur la ligne.' }
     }
   };
 
@@ -1971,7 +2011,13 @@
     { id: 'neon', name: 'Nuit Néon', skin: 'violet', board: 'gridline', effect: 'spark', rarity: 'ÉPIQUE', tagline: 'Tubes néon sur grille laser, feux d’artifice à chaque combo.' },
     { id: 'arcade', name: 'Arcade 88', skin: 'pixel', board: 'sunset', effect: 'confetti', rarity: 'ÉPIQUE', tagline: 'Pixels, soleil couchant et confettis : la borne de tes rêves.' },
     { id: 'magma', name: 'Cœur de Magma', skin: 'ember', board: 'carbon', effect: 'spark', rarity: 'RARE', tagline: 'Lave et fibre de carbone. Ça chauffe à chaque ligne.' },
-    { id: 'glacier', name: 'Glacier', skin: 'cobalt', board: 'glass', effect: 'ring', rarity: 'RARE', tagline: 'Cristal, verre givré et ondes de choc glacées.' }
+    { id: 'glacier', name: 'Glacier', skin: 'cobalt', board: 'glass', effect: 'ring', rarity: 'RARE', tagline: 'Cristal, verre givré et ondes de choc glacées.' },
+    { id: 'zen', name: 'Jardin Zen', skin: 'wood', board: 'forest', effect: 'sakura', rarity: 'RARE', tagline: 'Bois chaud, clairière et pétales de cerisier. Pur calme.' },
+    { id: 'abyss', name: 'Grands Fonds', skin: 'bubble', board: 'ocean', effect: 'ring', rarity: 'RARE', tagline: 'Des bulles qui remontent des abysses, onde après onde.' },
+    { id: 'cyber', name: 'Cyber Réseau', skin: 'circuit', board: 'gridline', effect: 'lightning', rarity: 'ÉPIQUE', tagline: 'Pistes électroniques, grille laser et éclairs de données.' },
+    { id: 'polaire', name: 'Nuit Polaire', skin: 'marble', board: 'polar', effect: 'snow', rarity: 'ÉPIQUE', tagline: 'Marbre blanc sous l’aurore, la neige tombe sur la grille.' },
+    { id: 'romance', name: 'Pop Romance', skin: 'lime', board: 'sunset', effect: 'hearts', rarity: 'ÉPIQUE', tagline: 'Bonbons gélifiés, coucher de soleil et cœurs partout.' },
+    { id: 'nuit-etoilee', name: 'Nuit Étoilée', skin: 'obsidian', board: 'void', effect: 'stars', rarity: 'MYTHIQUE', tagline: 'Verre noir dans le vide, des étoiles à chaque ligne.' }
   ];
 
   const toRgba = (hex, alpha) => { const n = parseInt(hex.slice(1), 16); return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${alpha})`; };
@@ -1994,7 +2040,7 @@
     [5, 5, -1, 2, 2, -1, 1], [5, -1, -1, -1, 2, -1, 1], [1, 1, -1, -1, -1, -1, 0]
   ];
 
-  const FX_COLORS = { burst: ['#65e8d0', '#8b7cff'], ring: ['#78d9ff', '#65e8d0'], confetti: ['#ff7f9e', '#ffd17a'], spark: ['#ffd17a', '#fff2b3'], nova: ['#fff2b3', '#ff9b70'], magnet: ['#e09aff', '#65e8ff'] };
+  const FX_COLORS = { burst: ['#65e8d0', '#8b7cff'], ring: ['#78d9ff', '#65e8d0'], confetti: ['#ff7f9e', '#ffd17a'], spark: ['#ffd17a', '#fff2b3'], nova: ['#fff2b3', '#ff9b70'], magnet: ['#e09aff', '#65e8ff'], sakura: ['#ffb3cf', '#ff7fae'], snow: ['#e6f6ff', '#9fd8ff'], hearts: ['#ff5d8f', '#ff9bb8'], stars: ['#fff3a8', '#ffd17a'], lightning: ['#8be9ff', '#ffffff'] };
   const CONFETTI_COLORS = ['#ff7f9e', '#ffd17a', '#65e8d0', '#8b7cff', '#78d9ff', '#c4f36d'];
 
   function fxHTML(effectId, rowCenterPercent) {
@@ -2009,6 +2055,15 @@
       add(`--s:38;--c:${c1}`, 'nv-core');
       add(`--s:30;--g:3.6;--c:${c2}`, 'nv-wave');
       for (let i = 0; i < 10; i++) add(`--a:${i * 36}deg;--r:${52 + (i % 2) * 20};--s:6;--c:${i % 2 ? c2 : c1}`, 'nv-dot');
+    } else if (effectId === 'sakura' || effectId === 'snow') {
+      const cols = effectId === 'sakura' ? ['#ffd0e0', '#ffb3cf', '#ff7fae'] : ['#ffffff', '#e6f6ff', '#bfe8ff'];
+      for (let i = 0; i < 18; i++) add(`--x:${((i * 53) % 100) - 50};--u:${-(effectId === 'snow' ? 14 + (i * 7) % 22 : 24 + (i * 11) % 34)};--f:${60 + (i * 9) % 30};--rot:${(i % 2 ? 1 : -1) * (180 + i * 24)}deg;--s:${effectId === 'snow' ? 5 : 8};--c:${cols[i % 3]};--d:${(i % 6) * .03}s`);
+    } else if (effectId === 'hearts') {
+      for (let i = 0; i < 12; i++) add(`--x:${((i * 41) % 90) - 45};--u:${-(48 + (i * 13) % 40)};--s:${9 + (i % 3) * 2};--c:${i % 2 ? c2 : c1};--d:${(i % 5) * .05}s`);
+    } else if (effectId === 'stars') {
+      for (let i = 0; i < 12; i++) add(`--a:${i * 30}deg;--r:${58 + (i % 3) * 16};--s:${10 + (i % 2) * 4};--c:${i % 2 ? c2 : c1};--d:${(i % 4) * .03}s`);
+    } else if (effectId === 'lightning') {
+      for (let i = 0; i < 8; i++) add(`--a:${i * 45 + 20}deg;--r:${70 + (i % 3) * 14};--c:${i % 2 ? c1 : c2};--d:${(i % 3) * .03}s`);
     } else if (effectId === 'magnet') {
       add(`--s:16;--c:${c1}`, 'mg-core');
       for (let i = 0; i < 12; i++) add(`--a:${i * 30}deg;--r:${62 + (i % 3) * 14};--s:6;--c:${i % 2 ? c2 : c1};--d:${(i % 4) * .05}s`, 'mg-dot');
@@ -2019,7 +2074,7 @@
   /* ===== Icônes vectorielles et vignettes (boutique, progression, packs) ===== */
   const svgIcon = name => `<svg class="ico" aria-hidden="true"><use href="#i-${name}"/></svg>`;
   const BOOSTER_ICON = { hammer: 'hammer', reroll: 'reroll', 'pulse-core': 'bolt', scanner: 'scanner', 'line-breaker': 'blade' };
-  const FX_ICON = { burst: 'fx-burst', ring: 'fx-ring', confetti: 'fx-confetti', spark: 'fx-spark', nova: 'fx-nova', magnet: 'fx-magnet' };
+  const FX_ICON = { burst: 'fx-burst', ring: 'fx-ring', confetti: 'fx-confetti', spark: 'fx-spark', nova: 'fx-nova', magnet: 'fx-magnet', sakura: 'fx-sakura', snow: 'fx-snow', hearts: 'fx-heart', stars: 'fx-star', lightning: 'bolt' };
   const MISSION_ICON = { score: 'trend', lines: 'rows', combo: 'flame', games: 'play', pieces: 'shapes', pulse: 'bolt' };
   const boosterIcon = id => svgIcon(BOOSTER_ICON[id] || 'sparkle');
   const DEMO3 = [[0, -1, 1], [-1, 2, -1], [3, -1, 4]];
@@ -2099,6 +2154,144 @@
     return miniBoardHTML(equipped.skin, equipped.board, { size: 5, layout: DEMO5_FX, clearRow: 2, effect: item.id });
   }
 
+  /* ===== Boutique : offre du jour, prix, écran de déblocage ===== */
+  const DEAL_DISCOUNT = .3;
+  const DEAL_KEY = 'pulse-grid-deal-v1';
+  const dayKey = () => { const d = new Date(); return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate(); };
+  function hashStr(text) { let h = 2166136261; for (let i = 0; i < text.length; i++) { h ^= text.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+  const roundPrice = value => Math.max(5, Math.round(value / 5) * 5);
+  // Une offre par jour, la même toute la journée (conservée à part, la sauvegarde du jeu n'est pas touchée).
+  function dailyDeal() {
+    let rec = null;
+    try { rec = JSON.parse(localStorage.getItem(DEAL_KEY) || 'null'); } catch (_) { rec = null; }
+    const valid = rec && rec.day === dayKey() && CATALOG[rec.category] && CATALOG[rec.category].some(item => item.id === rec.id);
+    if (!valid) {
+      const pool = ['skins', 'boards', 'effects'].flatMap(category => CATALOG[category].filter(item => item.price > 0 && !isUnlocked(category, item.id)).map(item => ({ category, id: item.id })));
+      if (!pool.length) return null;
+      const pick = pool[hashStr(String(dayKey())) % pool.length];
+      rec = { day: dayKey(), category: pick.category, id: pick.id };
+      try { localStorage.setItem(DEAL_KEY, JSON.stringify(rec)); } catch (_) { /* stockage indisponible */ }
+    }
+    const item = findCatalog(rec.category, rec.id);
+    return { category: rec.category, id: rec.id, item, full: item.price, price: roundPrice(item.price * (1 - DEAL_DISCOUNT)), claimed: isUnlocked(rec.category, rec.id) };
+  }
+  function itemPrice(category, item) {
+    const deal = dailyDeal();
+    return deal && !deal.claimed && deal.category === category && deal.id === item.id ? deal.price : item.price;
+  }
+  const dealOn = (category, item) => itemPrice(category, item) < item.price;
+  function dealTimeLeft() {
+    const now = new Date(); const end = new Date(now); end.setHours(24, 0, 0, 0);
+    const total = Math.max(0, Math.floor((end - now) / 1000));
+    const pad = value => String(value).padStart(2, '0');
+    return `${pad(Math.floor(total / 3600))}:${pad(Math.floor((total % 3600) / 60))}:${pad(total % 60)}`;
+  }
+  function dealBannerHTML(tab) {
+    const deal = dailyDeal(); if (!deal) return '';
+    if (tab !== 'themes' && tab !== deal.category) return '';
+    const meta = SHOP_META[deal.category][deal.id]; const rk = RARITY_KEY[meta.rarity];
+    const off = Math.round(DEAL_DISCOUNT * 100); const short = Math.max(0, deal.price - profile.coins);
+    const timer = `<span class="deal-timer">${deal.claimed ? 'Prochaine offre dans' : 'Se termine dans'} <b data-deal-timer data-day="${dayKey()}">${dealTimeLeft()}</b></span>`;
+    if (deal.claimed) return `<section class="deal claimed" data-r="${rk}"><div class="deal-copy"><span class="deal-kicker">OFFRE DU JOUR · RÉCLAMÉE ✓</span><h2>${deal.item.name} est à toi</h2>${timer}</div></section>`;
+    return `<section class="deal" data-r="${rk}" data-category="${deal.category}" data-item="${deal.id}">
+      <div class="deal-stage">${stageHTML(deal.category, deal.item)}<span class="deal-off">−${off}%</span></div>
+      <div class="deal-copy"><span class="deal-kicker">OFFRE DU JOUR</span><h2>${deal.item.name}</h2><p>${meta.note}</p>${timer}
+        <div class="deal-actions"><button class="deal-try" data-action="preview-item">APERÇU</button><button class="deal-cta${short ? ' short' : ''}" data-action="buy-item"><s>◆ ${formatNumber(deal.full)}</s><b>◆ ${formatNumber(deal.price)}</b></button></div>
+        ${short ? `<small class="deal-need">Il te manque <b>◆ ${formatNumber(short)}</b></small>` : `<small class="deal-save">Tu économises <b>◆ ${formatNumber(deal.full - deal.price)}</b></small>`}</div></section>`;
+  }
+  let dealTicker = null;
+  function tickDeal() {
+    const nodes = $$('[data-deal-timer]'); if (!nodes.length) return;
+    if (nodes[0].dataset.day !== String(dayKey())) { renderShop(); renderShopTeaser(); return; }
+    const text = dealTimeLeft(); nodes.forEach(node => { node.textContent = text; });
+  }
+  function startDealTicker() { if (!dealTicker) dealTicker = setInterval(tickDeal, 1000); renderShopTeaser(); }
+  function renderShopTeaser() {
+    const el = document.querySelector('.quick-card.shop-card small'); if (!el) return;
+    if (!el.dataset.def) el.dataset.def = el.textContent;
+    const deal = dailyDeal(); const hot = Boolean(deal && !deal.claimed);
+    el.textContent = hot ? `Offre du jour −${Math.round(DEAL_DISCOUNT * 100)}%` : el.dataset.def;
+    el.classList.toggle('hot', hot);
+  }
+
+  // Écran de déblocage après un achat : l'objet est présenté en grand, avec confettis.
+  function closeUnlockReveal(immediate) {
+    const root = $('#unlock-reveal'); if (!root) return;
+    if (immediate) root.remove(); else { root.classList.add('closing'); setTimeout(() => root.remove(), 260); }
+  }
+  function openUnlockReveal(kind, category, id) {
+    closeUnlockReveal(true);
+    const config = previewConfig({ kind, category, id }); if (!config) return;
+    const rk = RARITY_KEY[config.rarity] || 'rare';
+    const isTheme = kind === 'theme';
+    const stage = miniBoardHTML(config.skin, config.board, { size: 7, layout: DEMO7, clearRow: 3, effect: config.effect, big: true }) + (isTheme || category === 'skins' ? demoTrayHTML(config.skin) : '');
+    const root = document.createElement('div');
+    root.id = 'unlock-reveal'; root.className = 'ur'; root.dataset.r = rk;
+    root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', `${config.name} débloqué`);
+    root.innerHTML = `<div class="ur-bg"><i class="ur-rays"></i></div>
+      <div class="ur-body"><span class="ur-kicker">NOUVEAU · DÉBLOQUÉ</span><div class="ur-stage">${stage}<i class="ur-glint"></i></div>
+      <span class="ur-rarity">${config.rarity}${isTheme ? ' · THÈME COMPLET' : ' · ' + CATEGORY_LABEL[category].toUpperCase()}</span><h2>${config.name}</h2><p>${config.desc}</p>
+      <div class="ur-actions">${isTheme ? '<button class="ur-main" data-ur="close">SUPER !</button><small class="ur-note">✓ Thème équipé</small>' : '<button class="ur-later" data-ur="close">PLUS TARD</button><button class="ur-main" data-ur="equip">ÉQUIPER</button>'}</div></div>`;
+    ($('#app') || document.body).appendChild(root);
+    root.addEventListener('click', event => {
+      const button = event.target.closest('[data-ur]'); if (!button) return;
+      if (button.dataset.ur === 'equip') equipItem(category, id);
+      closeUnlockReveal(false);
+    });
+    const stageEl = root.querySelector('.ur-stage');
+    playSfx('unlock'); vibrate(rk === 'mythic' ? [20, 12, 40, 12, 70] : [16, 10, 30]);
+    setTimeout(() => { try { packSound(rk === 'mythic' || rk === 'epic' ? 'epic' : 'rare'); spawnPackParticles(stageEl, rk === 'mythic' ? 40 : 26, rk === 'rare' ? 'blue' : 'gold'); } catch (_) { /* décor seulement */ } }, 420);
+    setTimeout(() => { try { spawnPackParticles(stageEl, 18, 'gold'); } catch (_) { /* décor seulement */ } }, 1000);
+  }
+
+  /* ===== Coffres mystère : un cosmétique inédit au hasard, jamais de doublon ===== */
+  const CHESTS = [
+    { id: 'rare', name: 'Coffre Rare', price: 250, tier: 'bronze', odds: [['RARE', 70], ['ÉPIQUE', 30]] },
+    { id: 'epic', name: 'Coffre Épique', price: 450, tier: 'violet', odds: [['ÉPIQUE', 80], ['MYTHIQUE', 20]] },
+    { id: 'mythic', name: 'Coffre Mythique', price: 600, tier: 'gold', odds: [['MYTHIQUE', 100]] }
+  ];
+  const chestPool = rarity => ['skins', 'boards', 'effects'].flatMap(category => CATALOG[category]
+    .filter(item => item.price > 0 && SHOP_META[category][item.id] && SHOP_META[category][item.id].rarity === rarity && !isUnlocked(category, item.id))
+    .map(item => ({ category, id: item.id })));
+  function rollChest(chest) {
+    const usable = chest.odds.filter(([rarity]) => chestPool(rarity).length);
+    let pool;
+    if (usable.length) {
+      const total = usable.reduce((sum, [, weight]) => sum + weight, 0);
+      let roll = Math.random() * total; let chosen = usable[0][0];
+      for (const [rarity, weight] of usable) { if (roll < weight) { chosen = rarity; break; } roll -= weight; }
+      pool = chestPool(chosen);
+    } else pool = ['RARE', 'ÉPIQUE', 'MYTHIQUE'].flatMap(chestPool);
+    return pool.length ? pool[Math.floor(Math.random() * pool.length)] : null;
+  }
+  const chestEmpty = chest => !chest.odds.some(([rarity]) => chestPool(rarity).length) && !['RARE', 'ÉPIQUE', 'MYTHIQUE'].some(rarity => chestPool(rarity).length);
+  function chestsHTML() {
+    const cards = CHESTS.map(chest => {
+      const empty = chestEmpty(chest); const short = chest.price > profile.coins;
+      const odds = chest.odds.map(([rarity, pct]) => `${rarity[0] + rarity.slice(1).toLowerCase()} ${pct}%`).join(' · ');
+      return `<article class="cx" data-chest="${chest.id}" data-tier="${chest.tier}"><div class="pk-crystal" aria-hidden="true"><span>${svgIcon('pack')}</span></div><h4>${chest.name}</h4><small class="cx-odds">${odds}</small>
+        <button class="cx-btn${short || empty ? ' short' : ''}" data-action="buy-chest"${empty ? ' disabled' : ''}>${empty ? 'COMPLET' : `◆ ${formatNumber(chest.price)}`}</button></article>`;
+    }).join('');
+    return `<div class="shop-section-label">COFFRES MYSTÈRE <span class="shop-section-note">jamais de doublon</span></div><div class="cx-row">${cards}</div>`;
+  }
+  let chestBusy = false;
+  function buyChest(id) {
+    const chest = CHESTS.find(item => item.id === id); if (!chest || chestBusy) return;
+    if (profile.coins < chest.price) { showToast('Pas assez de PulseCoins pour ce coffre.'); vibrate(20); return; }
+    const pick = rollChest(chest);
+    if (!pick) { showToast('Tu possèdes déjà toute la collection !'); return; }
+    profile.coins -= chest.price; profile.unlocked[pick.category].push(pick.id); saveProfile();
+    renderShop(); renderCollection(); renderHome(); renderShopTeaser();
+    chestBusy = true;
+    const root = document.createElement('div');
+    root.id = 'chest-open'; root.className = 'ur cxo'; root.dataset.r = chest.tier === 'gold' ? 'mythic' : chest.tier === 'violet' ? 'epic' : 'rare';
+    root.innerHTML = `<div class="ur-bg"><i class="ur-rays"></i></div><div class="ur-body"><div class="cx-big" data-tier="${chest.tier}"><div class="pk-crystal"><span>${svgIcon('pack')}</span></div></div><span class="ur-kicker">${chest.name.toUpperCase()}</span><p>Ouverture en cours…</p></div>`;
+    ($('#app') || document.body).appendChild(root);
+    playSfx('purchase'); packSound('charge'); vibrate([10, 50, 14, 50, 20, 50, 28]);
+    setTimeout(() => { root.classList.add('burst'); packSound('burst'); vibrate([40, 20, 80]); }, 1250);
+    setTimeout(() => { root.remove(); chestBusy = false; openUnlockReveal('item', pick.category, pick.id); }, 1750);
+  }
+
   function needBlock(price) {
     const short = Math.max(0, price - profile.coins);
     if (!short) return '';
@@ -2108,14 +2301,14 @@
   function renderCatalogCard(category, item) {
     const unlocked = isUnlocked(category, item.id); const equipped = profile.equipped[category.slice(0, -1)] === item.id;
     const meta = SHOP_META[category]?.[item.id] || { rarity: 'RARE', tag: 'COLLECTION', note: item.description };
-    const short = item.price > profile.coins;
+    const price = itemPrice(category, item); const onDeal = price < item.price; const short = price > profile.coins;
     let action;
     if (equipped) action = '<button class="cos-btn on" disabled>✓ ÉQUIPÉ</button>';
     else if (unlocked) action = '<button class="cos-btn equip" data-action="equip-item">ÉQUIPER</button>';
-    else action = `<button class="cos-btn buy${short ? ' short' : ''}" data-action="buy-item">◆ ${formatNumber(item.price)}</button>${needBlock(item.price)}`;
+    else action = `<button class="cos-btn buy${short ? ' short' : ''}" data-action="buy-item">${onDeal ? `<s>◆ ${formatNumber(item.price)}</s>` : ''}<b>◆ ${formatNumber(price)}</b></button>${needBlock(price)}`;
     const state = equipped ? '<span class="cos-state on">ÉQUIPÉ</span>' : unlocked ? '<span class="cos-state own">✓ POSSÉDÉ</span>' : '';
-    return `<article class="cos-card ${unlocked ? 'owned' : 'locked'}${equipped ? ' equipped-card' : ''}" data-r="${RARITY_KEY[meta.rarity]}" data-category="${category}" data-item="${item.id}">
-      <button class="cos-stage" data-action="preview-item" aria-label="Aperçu de ${item.name}">${stageHTML(category, item)}<span class="cos-rarity">${meta.rarity}</span>${state}<span class="cos-try">◉ APERÇU EN JEU</span></button>
+    return `<article class="cos-card ${unlocked ? 'owned' : 'locked'}${equipped ? ' equipped-card' : ''}${!unlocked && !short ? ' can-buy' : ''}${onDeal ? ' on-deal' : ''}" data-r="${RARITY_KEY[meta.rarity]}" data-category="${category}" data-item="${item.id}">
+      <button class="cos-stage" data-action="preview-item" aria-label="Aperçu de ${item.name}">${stageHTML(category, item)}<span class="cos-rarity">${meta.rarity}</span>${onDeal ? `<span class="cos-deal">−${Math.round(DEAL_DISCOUNT * 100)}% AUJOURD’HUI</span>` : ""}${state}<span class="cos-try">◉ APERÇU EN JEU</span></button>
       <div class="cos-body"><div class="cos-name"><em>${meta.tag}</em><h3>${item.name}</h3></div><p class="cos-note">${meta.note}</p>${action}</div></article>`;
   }
 
@@ -2175,7 +2368,7 @@
     const unlocked = isUnlocked(config.category, config.id); const equipped = profile.equipped[config.category.slice(0, -1)] === config.id;
     if (equipped) return '<button class="cp-cta on" disabled>✓ ÉQUIPÉ</button>';
     if (unlocked) return '<button class="cp-cta equip" data-action="equip-item">ÉQUIPER</button>';
-    return buyBlockHTML(config.item.price, 0, 'buy-item', 'DÉBLOQUER');
+    return buyBlockHTML(itemPrice(config.category, config.item), dealOn(config.category, config.item) ? config.item.price : 0, 'buy-item', dealOn(config.category, config.item) ? 'OFFRE DU JOUR' : 'DÉBLOQUER');
   }
 
   function openCosmeticPreview(kind, category, id) {
@@ -2203,8 +2396,10 @@
     profile.coins -= info.price;
     info.missing.forEach(([category, itemId]) => { if (!profile.unlocked[category].includes(itemId)) profile.unlocked[category].push(itemId); });
     info.parts.forEach(([category, itemId]) => { profile.equipped[category.slice(0, -1)] = itemId; });
-    applyTheme(); refreshGameVisuals(); saveProfile(); renderShop(); renderCollection(); renderHome(); refreshPreview();
-    showToast(`${theme.name} débloqué et équipé !`); playSfx('unlock'); vibrate(30);
+    applyTheme(); refreshGameVisuals(); saveProfile();
+    if (state.preview) closeModal();
+    renderShop(); renderCollection(); renderHome(); renderShopTeaser();
+    openUnlockReveal('theme', null, id);
   }
 
   function equipTheme(id) {
@@ -2232,7 +2427,7 @@
       return;
     }
     if (state.shopTab === 'themes') {
-      target.innerHTML = renderThemeShop();
+      target.innerHTML = dealBannerHTML('themes') + chestsHTML() + renderThemeShop();
       return;
     }
     const items = CATALOG[state.shopTab] || [];
@@ -2240,22 +2435,76 @@
     const key = state.shopTab.slice(0, -1);
     const equipped = findCatalog(state.shopTab, profile.equipped[key]);
     const owned = items.filter(item => isUnlocked(state.shopTab, item.id)).length;
-    target.innerHTML = `<section class="shop-hero shop-hero-${state.shopTab}"><div class="shop-hero-icon thumb-hero hero-${state.shopTab}">${heroThumbHTML(state.shopTab)}</div><div class="shop-hero-copy"><span class="eyebrow accent">${copy.kicker}</span><h2>${copy.title}</h2><p>${copy.detail}</p></div><div class="shop-hero-stat"><strong>${owned}/${items.length}</strong><small>possédés</small></div></section><div class="shop-current"><span>ÉQUIPÉ</span><strong>${equipped.name}</strong><small>${SHOP_META[state.shopTab]?.[equipped.id]?.note || equipped.description}</small></div><div class="shop-section-label">COLLECTION ${owned === items.length ? 'COMPLÈTE' : `${items.length - owned} À DÉBLOQUER`}</div><div class="cos-grid">${items.map(item => renderCatalogCard(state.shopTab, item)).join('')}</div>`;
+    target.innerHTML = `${dealBannerHTML(state.shopTab)}<section class="shop-hero shop-hero-${state.shopTab}"><div class="shop-hero-icon thumb-hero hero-${state.shopTab}">${heroThumbHTML(state.shopTab)}</div><div class="shop-hero-copy"><span class="eyebrow accent">${copy.kicker}</span><h2>${copy.title}</h2><p>${copy.detail}</p></div><div class="shop-hero-stat"><strong>${owned}/${items.length}</strong><small>possédés</small></div></section><div class="shop-current"><span>ÉQUIPÉ</span><strong>${equipped.name}</strong><small>${SHOP_META[state.shopTab]?.[equipped.id]?.note || equipped.description}</small></div><div class="shop-section-label">COLLECTION ${owned === items.length ? 'COMPLÈTE' : `${items.length - owned} À DÉBLOQUER`}</div><div class="cos-grid">${items.map(item => renderCatalogCard(state.shopTab, item)).join('')}</div>`;
+  }
+
+  /* ----- Boutique des bonus : packs transparents, démonstrations animées, lots ×3 ----- */
+  const BOOSTER_BADGE = { hammer: 'RARE', reroll: 'TACTIQUE', 'pulse-core': 'ÉPIQUE', scanner: 'RARE', 'line-breaker': 'ÉPIQUE' };
+  const PACK_TIER = { starter: 'bronze', combo: 'violet', overdrive: 'gold' };
+  const PACK_SHORT = { hammer: 'Éclateur', reroll: 'Recompo.', 'pulse-core': 'Surcharge', scanner: 'Scanner', 'line-breaker': 'Lame' };
+  const boosterBundlePrice = (item, qty) => (qty >= 3 ? roundPrice(item.price * qty * .9) : item.price * qty);
+  function packValue(pack) {
+    const sum = Object.entries(pack.contents).reduce((total, [id, count]) => total + count * ((CATALOG.boosters.find(item => item.id === id) || {}).price || 0), 0);
+    return { sum, save: Math.max(0, sum - pack.price), pct: sum ? Math.round((1 - pack.price / sum) * 100) : 0 };
+  }
+  const needInline = price => {
+    const short = Math.max(0, price - profile.coins);
+    return short ? `<div class="pk-need"><span class="cos-need"><span style="width:${Math.min(100, Math.round(profile.coins / price * 100))}%"></span></span><small>Il te manque <b>◆ ${formatNumber(short)}</b></small></div>` : '<div class="pk-ready">✓ Tu as assez de PulseCoins</div>';
+  };
+  function packCardHTML(pack) {
+    const value = packValue(pack); const short = pack.price > profile.coins;
+    const total = Object.values(pack.contents).reduce((sum, count) => sum + count, 0);
+    const chips = Object.entries(pack.contents).map(([id, count]) => {
+      const booster = CATALOG.boosters.find(item => item.id === id);
+      return `<span class="pk-chip"><span class="pk-ico">${boosterIcon(id)}</span><b>×${count}</b><small>${PACK_SHORT[id] || (booster ? booster.name : id)}</small></span>`;
+    }).join('');
+    return `<article class="pk" data-pack-id="${pack.id}" data-tier="${PACK_TIER[pack.id] || 'bronze'}">
+      <span class="pk-ribbon">${pack.badge || 'PACK'}</span>
+      <div class="pk-visual" aria-hidden="true"><i class="pk-aura"></i><div class="pk-crystal"><span>${svgIcon('pack')}</span></div><i class="pk-sp s1"></i><i class="pk-sp s2"></i><i class="pk-sp s3"></i><b class="pk-count">${total}<small>BONUS</small></b></div>
+      <div class="pk-main"><h3>${pack.name}</h3><p>${pack.description}</p><div class="pk-chips">${chips}</div>
+        <div class="pk-value"><span class="pk-worth">Valeur <s>◆ ${formatNumber(value.sum)}</s></span><span class="pk-save">−${value.pct}% · tu économises ◆ ${formatNumber(value.save)}</span></div></div>
+      <div class="pk-buy"><button class="pk-cta${short ? ' short' : ''}" data-action="buy-pack"><span>OBTENIR LE PACK</span><b>◆ ${formatNumber(pack.price)}</b></button>${needInline(pack.price)}</div></article>`;
+  }
+
+  const DEMO_GRID = {
+    hammer: ['.aa..', 'abT.a', '..ba.'], reroll: ['.....', '.a.b.', '.....'], 'pulse-core': ['.....', 'aabba', 'b.a.b'],
+    scanner: ['.ab..', 'a.bH.', '.a.b.'], 'line-breaker': ['a.b..', 'aabba', '..a.b']
+  };
+  function boosterDemoHTML(id) {
+    const rows = DEMO_GRID[id] || DEMO_GRID.hammer;
+    const cells = rows.flatMap((row, r) => [...row].map((ch, c) => {
+      const cls = ch === '.' ? '' : ch === 'T' ? 'f t' : ch === 'H' ? 'f h' : `f f-${ch}`;
+      const live = id === 'line-breaker' && r === 1 ? ' row' : id === 'pulse-core' && r === 1 ? ' prow' : '';
+      return `<i class="${cls}${live}" style="--c:${c}"></i>`;
+    })).join('');
+    let extra = '';
+    if (id === 'hammer') extra = `<span class="bd-tool">${svgIcon('hammer')}</span><i class="bd-spark"></i>`;
+    else if (id === 'scanner') extra = '<i class="bd-scan"></i>';
+    else if (id === 'line-breaker') extra = '<i class="bd-blade"></i>';
+    else if (id === 'pulse-core') extra = '<span class="bd-charge"><i></i></span><i class="bd-ring"></i>';
+    else if (id === 'reroll') extra = '<span class="bd-tray"><i class="p1"></i><i class="p2"></i><i class="p3"></i></span>';
+    const grid = id === 'reroll' ? '' : `<span class="bd-grid">${cells}</span>`;
+    return `<div class="bd bd-${id}">${grid}${extra}</div>`;
   }
 
   function renderBoosterShop() {
-    const packs = CATALOG.packs.map(pack => {
-      const rewardCount = Object.values(pack.contents).reduce((sum, count) => sum + count, 0);
-      return `<article class="catalog-card pack-card" data-pack-id="${pack.id}"><div class="catalog-preview pack-preview"><span>${svgIcon('pack')}</span><em>${pack.badge || 'PACK'}</em><b class="pack-question">?</b></div><div class="pack-kicker">${pack.badge || 'PACK DE BOOSTERS'} <b>${pack.savings || ''}</b></div><h3>${pack.name}</h3><p>${pack.description}</p><div class="pack-mystery"><span>?</span><div><strong>CONTENU MYSTÈRE</strong><small>${rewardCount} bonus garantis · révélés à l’ouverture</small></div></div><div class="pack-value"><span>VALEUR RUN</span><strong>${pack.savings || 'STOCK'}</strong></div><button class="item-action buy" data-action="buy-pack">◆ ${pack.price}</button></article>`;
-    }).join('');
+    const packValues = CATALOG.packs.map(pack => packValue(pack).pct);
+    const best = Math.max(0, ...packValues);
+    const packs = CATALOG.packs.map(pack => packCardHTML(pack)).join('');
     const boosters = CATALOG.boosters.map(item => renderBoosterShopCard(item)).join('');
-    return `<div class="booster-shop"><section class="shop-hero shop-hero-boosters"><div class="shop-hero-icon thumb-hero">${svgIcon('bolt')}</div><div class="shop-hero-copy"><span class="eyebrow accent">OUTILS DE RUN</span><h2>Bonus de partie</h2><p>Chaque bonus a un moment précis où il peut sauver ta grille. Pas de décoration inutile.</p></div><div class="shop-hero-stat"><strong>${Object.values(profile.inventory).reduce((sum, count) => sum + (Number(count) || 0), 0)}</strong><small>en stock</small></div></section><div class="booster-shop-intro"><div class="booster-shop-icon">${svgIcon('target')}</div><div><span class="eyebrow accent">CONSOMMABLES</span><strong>Choisis ton style de secours.</strong><small>Précision, information, tempo ou ouverture : les packs combinent des usages différents.</small></div></div><div class="shop-section-label">PACKS AVANTAGEUX</div><div class="catalog-grid pack-grid">${packs}</div><div class="shop-section-label">À L'UNITÉ · CHOISIS TON OUTIL</div><div class="catalog-grid booster-grid">${boosters}</div></div>`;
+    const stock = Object.values(profile.inventory).reduce((sum, count) => sum + (Number(count) || 0), 0);
+    return `<div class="booster-shop"><section class="shop-hero shop-hero-boosters"><div class="shop-hero-icon thumb-hero">${svgIcon('bolt')}</div><div class="shop-hero-copy"><span class="eyebrow accent">OUTILS DE RUN</span><h2>Bonus de partie</h2><p>Chaque bonus a un moment précis où il peut sauver ta grille. Regarde-les agir avant d’acheter.</p></div><div class="shop-hero-stat"><strong>${stock}</strong><small>en stock</small></div></section>
+      <div class="shop-section-label">PACKS · JUSQU’À −${best}% <span class="shop-section-note">contenu garanti</span></div><div class="pk-list">${packs}</div>
+      <div class="shop-section-label">À L’UNITÉ · LOT ×3 À −10%</div><div class="bs-grid">${boosters}</div></div>`;
   }
 
   function renderBoosterShopCard(item) {
-    const count = profile.inventory[item.id] || 0;
-    const rarity = item.id === 'line-breaker' || item.id === 'pulse-core' ? 'ÉPIQUE' : item.id === 'scanner' || item.id === 'hammer' ? 'RARE' : 'TACTIQUE';
-    return `<article class="catalog-card booster-card booster-shop-card" data-booster-id="${item.id}"><div class="catalog-preview booster-preview"><span>${boosterIcon(item.id)}</span><em>${item.tag}</em></div><div class="product-head"><span class="product-rarity" data-rarity="${rarity}">${rarity}</span><span class="product-tag">${item.tag}</span></div><div class="booster-card-head"><h3>${item.name}</h3><strong>${count}</strong></div><p>${item.description}</p><div class="booster-how"><span>UTILISATION</span>${item.howTo}</div><div class="inventory-line"><span>EN STOCK</span><b>${count}</b></div><button class="item-action buy" data-action="buy-booster">◆ ${item.price}</button></article>`;
+    const count = profile.inventory[item.id] || 0; const badge = BOOSTER_BADGE[item.id] || 'RARE';
+    const bundle = boosterBundlePrice(item, 3); const short1 = item.price > profile.coins; const short3 = bundle > profile.coins;
+    return `<article class="bs" data-booster-id="${item.id}" data-b="${RARITY_KEY[badge] || 'rare'}">${boosterDemoHTML(item.id)}
+      <div class="bs-head"><span class="bs-tag">${item.tag}</span><span class="bs-stock${count ? '' : ' empty'}">${count ? `EN STOCK · ${count}` : 'STOCK VIDE'}</span></div>
+      <h3>${item.name}</h3><p>${item.description}</p><div class="bs-how"><b>COMMENT</b>${item.howTo}</div>
+      <div class="bs-buy"><button class="bs-btn${short1 ? ' short' : ''}" data-action="buy-booster" data-qty="1"><small>×1</small><b>◆ ${formatNumber(item.price)}</b></button><button class="bs-btn best${short3 ? ' short' : ''}" data-action="buy-booster" data-qty="3"><small>×3 · −10%</small><b>◆ ${formatNumber(bundle)}</b></button></div></article>`;
   }
 
   function renderCollection() {
@@ -2272,22 +2521,28 @@
 
   function buyItem(category, id) {
     if (!category || !id) return; const item = findCatalog(category, id); if (isUnlocked(category, id)) { equipItem(category, id); return; }
-    if (profile.coins < item.price) { showToast('Pas assez de PulseCoins pour cet élément.'); vibrate(20); return; }
-    profile.coins -= item.price; profile.unlocked[category].push(id); saveProfile(); renderShop(); renderCollection(); renderHome(); animateShopItem('data-item', id); showToast(`${item.name} débloqué !`); playSfx('unlock'); vibrate(22); refreshPreview();
+    const price = itemPrice(category, item);
+    if (profile.coins < price) { showToast('Pas assez de PulseCoins pour cet élément.'); vibrate(20); return; }
+    profile.coins -= price; profile.unlocked[category].push(id); saveProfile();
+    if (state.preview) closeModal();
+    renderShop(); renderCollection(); renderHome(); renderShopTeaser(); animateShopItem('data-item', id);
+    openUnlockReveal('item', category, id);
   }
 
-  function buyBooster(id) {
+  function buyBooster(id, qty = 1) {
     const booster = CATALOG.boosters.find(item => item.id === id);
     if (!booster) return;
-    if (profile.coins < booster.price) {
+    qty = qty >= 3 ? 3 : 1;
+    const price = boosterBundlePrice(booster, qty);
+    if (profile.coins < price) {
       showToast('Pas assez de PulseCoins pour ce bonus.');
       vibrate(20);
       return;
     }
-    profile.coins -= booster.price;
-    profile.inventory[id] = (profile.inventory[id] || 0) + 1;
+    profile.coins -= price;
+    profile.inventory[id] = (profile.inventory[id] || 0) + qty;
     saveProfile(); renderShop(); renderHome(); renderBoosters(); animateShopItem('data-booster-id', id);
-    showToast(`${booster.name} ajouté à l'inventaire.`);
+    showToast(`${qty > 1 ? `×${qty} ` : ''}${booster.name} ajouté à l'inventaire.`);
     playSfx('purchase'); vibrate(22);
   }
 
@@ -2599,7 +2854,7 @@
   function openPauseModal() {
     if (!state.gameActive) { showScreen('home'); return; }
     state.paused = true;
-    openModal(`<div class="pause-icon">${svgIcon('pause')}</div><span class="modal-kicker">PARTIE EN PAUSE</span><h2>Kits de bonus</h2><p>La partie est en sécurité. Reviens quand tu veux continuer à construire ta grille.</p><div class="modal-actions"><button class="secondary" data-action="go-home">ACCUEIL</button><button class="secondary" data-action="restart">RECOMMENCER</button><button class="primary" data-action="resume">CONTINUER</button></div>`);
+    openModal(`<div class="pause-icon">${svgIcon('pause')}</div><span class="modal-kicker">PARTIE EN PAUSE</span><h2>Respire un instant</h2><p>La partie est en sécurité. Reviens quand tu veux continuer à construire ta grille.</p><div class="modal-actions"><button class="secondary" data-action="go-home">ACCUEIL</button><button class="secondary" data-action="restart">RECOMMENCER</button><button class="primary" data-action="resume">CONTINUER</button></div>`);
   }
 
   function openEndModal(reward, xpEarned, levels, levelBefore, isNewRecord, previousBest) {
@@ -2642,12 +2897,12 @@
       : cells.slice(0, 16);
     particleCells.forEach(([r, c], index) => {
       const particle = document.createElement('i');
-      const type = pulseBurst ? 'pulse-particle' : effect === 'ring' ? 'ring' : effect === 'confetti' ? 'round' : effect === 'nova' ? 'nova-particle' : effect === 'magnet' ? 'magnet-particle' : '';
+      const type = pulseBurst ? 'pulse-particle' : effect === 'ring' ? 'ring' : effect === 'confetti' ? 'round' : effect === 'nova' ? 'nova-particle' : effect === 'magnet' ? 'magnet-particle' : effect === 'sakura' ? 'petal' : effect === 'snow' ? 'flake' : effect === 'hearts' ? 'heart' : effect === 'stars' ? 'star' : effect === 'lightning' ? 'bolt' : '';
       particle.className = `fx-particle ${type}`;
       const x = ((c + .5) / geo.cols) * 100; const y = ((r + .5) / geo.rows) * 100;
       particle.style.left = `${x}%`; particle.style.top = `${y}%`; particle.style.setProperty('--dx', `${(Math.random() - .5) * (pulseBurst ? 150 : 95)}px`); particle.style.setProperty('--dy', `${-15 - Math.random() * (pulseBurst ? 110 : 75)}px`); particle.style.animationDelay = `${index * (pulseBurst ? 7 : 12)}ms`; layer.appendChild(particle); setTimeout(() => particle.remove(), pulseBurst ? 1100 : 850);
     });
-    if (pulseBurst || effect === 'spark' || effect === 'nova' || effect === 'magnet') layer.animate([{ opacity: .35 }, { opacity: 1 }, { opacity: .35 }], { duration: pulseBurst ? 440 : effect === 'nova' ? 260 : 360, iterations: 2 });
+    if (pulseBurst || effect === 'spark' || effect === 'nova' || effect === 'magnet' || effect === 'lightning') layer.animate([{ opacity: .35 }, { opacity: 1 }, { opacity: .35 }], { duration: pulseBurst ? 440 : effect === 'nova' ? 260 : 360, iterations: 2 });
   }
 
   function showClearFeedback(count) {
@@ -3624,7 +3879,7 @@
      À propos, garde-fous
      ===================================================================== */
   function openAbout() {
-    openModal(`<span class="modal-kicker">PULSE GRID · VERSION ${APP_VERSION}</span><h2>Confidentialité</h2><p>Pulse Grid n\u2019affiche aucune publicité et ne contient aucun traceur. Ta progression est enregistrée sur cet appareil (stockage local) ; tu peux l\u2019exporter ou l\u2019effacer à tout moment dans les Paramètres.</p><p>Seul le classement mondial utilise Internet : si tu choisis un pseudo, celui-ci, un identifiant aléatoire et ton meilleur score Classic sont envoyés à notre serveur et visibles par les autres joueurs. N\u2019utilise pas ton vrai nom.</p><p>Le jeu fonctionne hors ligne ; le classement attend simplement que la connexion revienne. Les achats se font avec la monnaie du jeu (PulseCoins), qui n\u2019a aucune valeur réelle.</p><div class="modal-actions"><button class="primary" data-action="close-modal">FERMER</button></div>`);
+    openModal(`<span class="modal-kicker">PULSE GRID · VERSION ${APP_VERSION}</span><h2>Confidentialité</h2><p>Pulse Grid n\u2019affiche aucune publicité et ne contient aucun traceur. Ta progression est enregistrée sur cet appareil (stockage local) ; tu peux l\u2019exporter ou l\u2019effacer à tout moment dans les Paramètres.</p><p>Seul le classement mondial, facultatif, utilise Internet : si tu le rejoins, ton pseudo, un identifiant aléatoire et ton meilleur score Classic sont envoyés à notre serveur et visibles par les autres joueurs. N\u2019utilise pas ton vrai nom. Tu peux tout supprimer depuis Paramètres › Supprimer mes données en ligne.</p><p>Le jeu fonctionne hors ligne. Les achats se font avec la monnaie du jeu (PulseCoins), qui n\u2019a aucune valeur réelle.</p><div class="modal-actions"><a class="secondary link-btn" href="privacy.html" target="_blank" rel="noopener">POLITIQUE COMPLÈTE</a><button class="primary" data-action="close-modal">FERMER</button></div>`);
   }
   // Une erreur isolée ne doit jamais figer l'écran : on prévient et la partie continue.
   let lastErrorToast = 0;
@@ -3728,6 +3983,20 @@
       .replace(/[\u0000-\u001f\u007f-\u009f\u200b-\u200f\u2028-\u202e\u2060-\u206f\ufeff]/g, '')
       .replace(/\s+/g, ' ').trim();
   }
+  // Pseudos visibles par tous : on refuse les insultes courantes et les noms qui imitent l'équipe.
+  const NAME_BAD_SUB = ['putain', 'salope', 'connard', 'connasse', 'encule', 'niquer', 'niquetamere', 'batard', 'bitch', 'fuck', 'shit', 'cunt', 'nigger', 'nigga', 'faggot', 'whore', 'nazi', 'hitler', 'pedophile', 'terroris'];
+  const NAME_BAD_EXACT = ['pute', 'ntm', 'fdp', 'tg', 'kkk', 'isis', 'sexe', 'sex', 'porn', 'porno', 'nique'];
+  const NAME_RESERVED = ['admin', 'administrator', 'administrateur', 'moderator', 'moderateur', 'support', 'staff', 'officiel', 'official'];
+  function nameFlagged(value) {
+    const leet = { 0: 'o', 1: 'i', 3: 'e', 4: 'a', 5: 's', 7: 't', 8: 'b', '@': 'a', '$': 's', '!': 'i' };
+    const base = String(value).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[013457 8@$!]/g, ch => leet[ch] || ' ');
+    const squashed = base.replace(/[^a-z]/g, '');
+    const tokens = base.split(/[^a-z]+/).filter(Boolean);
+    if (squashed.includes('pulsegrid')) return true;
+    if (NAME_BAD_SUB.some(word => squashed.includes(word))) return true;
+    if (NAME_BAD_EXACT.some(word => squashed === word || tokens.includes(word))) return true;
+    return NAME_RESERVED.some(word => squashed === word || tokens.includes(word));
+  }
   function validateName(raw) {
     const value = cleanName(raw);
     const length = Array.from(value).length;
@@ -3735,6 +4004,7 @@
     if (/[<>&"'`\\]/.test(value)) return { ok: false, value, error: 'Caractères interdits : < > & " \' ` \\' };
     if (length < ONLINE.nameMin) return { ok: false, value, error: `Minimum ${ONLINE.nameMin} caractères.` };
     if (length > ONLINE.nameMax) return { ok: false, value, error: `Maximum ${ONLINE.nameMax} caractères.` };
+    if (nameFlagged(value)) return { ok: false, value, error: 'Ce pseudo n\u2019est pas autorisé. Choisis-en un autre.' };
     return { ok: true, value, error: '' };
   }
 
@@ -3751,7 +4021,8 @@
       syncedName: typeof o.syncedName === 'string' ? o.syncedName : '',
       rank: count(o.rank),                // dernier rang connu (affichage hors ligne)
       rankBest: count(o.rankBest),
-      asked: count(o.asked)               // nombre de fois où la fenêtre « choisis ton pseudo » a été affichée
+      asked: count(o.asked),              // nombre de fois où la fenêtre « choisis ton pseudo » a été affichée
+      skipped: o.skipped === true         // le joueur a choisi de jouer sans classement : on ne lui redemande pas de pseudo
     };
   }
   let online = loadOnline();
@@ -3866,6 +4137,33 @@
     setTimeout(() => { try { if (onlineNeedsSync()) onlineSyncNow().then(() => renderLeaderboardTeaser()).catch(() => {}); } catch (_) { /* rien */ } }, delay);
   }
 
+  // Effacement des données en ligne : supprime la ligne du joueur côté serveur, puis oublie l'identité locale.
+  async function deleteOnlineData() {
+    const C = ONLINE.cols;
+    const idFilter = { [C.id]: `eq.${online.id}` };
+    const row = await onlineFetchMine();
+    if (row) {
+      const { data } = await sbRequest(`${ONLINE.table}?${qs({ ...idFilter, select: C.id })}`, { method: 'DELETE', prefer: 'return=representation' });
+      if (!Array.isArray(data) || !data.length) throw onlineError('blocked');
+    }
+    online = { id: makePlayerId(), name: '', synced: 0, syncedName: '', rank: 0, rankBest: 0, asked: 0, skipped: true };
+    saveOnline(); lb.rows = []; lb.status = 'idle'; lb.editing = false;
+    return Boolean(row);
+  }
+  function askDeleteOnline() {
+    openModal(`<span class="modal-kicker confirm-warn">DONNÉES EN LIGNE</span><h2>Supprimer mes données en ligne ?</h2><p>Ton pseudo, ton identifiant et ton record sont supprimés du classement mondial. Ta progression sur cet appareil (niveau, pièces, objets) n\u2019est pas touchée. Il faut une connexion Internet.</p><div class="modal-actions"><button class="secondary" data-action="close-modal">ANNULER</button><button class="primary" data-action="confirm-delete-online">SUPPRIMER</button></div>`);
+  }
+  async function confirmDeleteOnline() {
+    closeModal();
+    try {
+      const had = await deleteOnlineData();
+      renderLeaderboardTeaser(); playSfx('button'); vibrate(14);
+      showToast(had ? 'Tes données en ligne ont été supprimées.' : 'Aucune donnée en ligne à supprimer.');
+    } catch (error) {
+      showToast(error && error.onlineKind === 'blocked' ? 'Suppression refusée par le serveur. Écris-nous (voir Confidentialité).' : 'Connexion requise pour supprimer tes données en ligne.');
+    }
+  }
+
   // ----- Écran Classement -----
   const lb = { status: 'idle', rows: [], token: 0, editing: false, draft: '', nameError: '', focus: false };
 
@@ -3954,14 +4252,13 @@
   }
 
   // ----- Choix du pseudo au premier lancement -----
-  // Le pseudo est OBLIGATOIRE : la fenêtre s'affiche à chaque lancement tant
-  // qu'aucun pseudo n'est enregistré, et elle ne peut pas être fermée sans valider
-  // (ni clic à côté, ni Échap, ni bouton retour). Le pseudo reste modifiable
-  // ensuite depuis l'écran Classement.
+  // La fenêtre s'affiche à chaque lancement tant qu'aucun pseudo n'est enregistré ET que le joueur
+  // n'a pas choisi « Jouer sans classement ». Elle ne se ferme que par l'un de ces deux boutons
+  // (ni clic à côté, ni Échap, ni bouton retour). Le pseudo reste modifiable depuis l'écran Classement.
   function askNameSoon(delay = 1100, attempt = 0) {
     setTimeout(() => {
       try {
-        if (online.name) return;
+        if (online.name || online.skipped) return;
         const busy = $('#modal-backdrop')?.classList.contains('open') || state.gameActive || state.screen !== 'home';
         if (busy) { askNameSoon(2500, attempt + 1); return; }
         online.asked += 1; saveOnline();
@@ -3971,8 +4268,17 @@
   }
 
   function openNameModal(error = '', draft = '') {
-    openModal(`<span class="modal-kicker">BIENVENUE</span><h2>Choisis ton pseudo</h2><p>Choisis un pseudo pour commencer. Il sera visible dans le classement mondial, et ton record Classic sera envoyé automatiquement dès ta première partie.</p><form id="first-name-form" autocomplete="off" novalidate><input id="first-name-input" class="lb-input" name="name" type="text" maxlength="${ONLINE.nameMax}" placeholder="Ton pseudo" value="${esc(draft)}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="done" aria-label="Pseudo" aria-describedby="first-name-error" /><div id="first-name-error" class="lb-field-error" role="alert">${esc(error)}</div><small class="name-hint">${ONLINE.nameMin} à ${ONLINE.nameMax} caractères · modifiable plus tard dans Classement.</small><div class="lb-form-actions"><button type="submit" class="primary-button lb-submit"><span>VALIDER</span><b><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></b></button></div></form>`, 'name-modal');
+    openModal(`<span class="modal-kicker">BIENVENUE</span><h2>Choisis ton pseudo</h2><p>Choisis un pseudo pour rejoindre le classement mondial : il sera visible par les autres joueurs et ton record Classic sera envoyé automatiquement. Tu peux aussi jouer sans classement et rejoindre plus tard.</p><form id="first-name-form" autocomplete="off" novalidate><input id="first-name-input" class="lb-input" name="name" type="text" maxlength="${ONLINE.nameMax}" placeholder="Ton pseudo" value="${esc(draft)}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="done" aria-label="Pseudo" aria-describedby="first-name-error" /><div id="first-name-error" class="lb-field-error" role="alert">${esc(error)}</div><small class="name-hint">${ONLINE.nameMin} à ${ONLINE.nameMax} caractères · modifiable plus tard dans Classement. N\u2019utilise pas ton vrai nom. <a href="privacy.html" target="_blank" rel="noopener">Confidentialité</a></small><div class="lb-form-actions"><button type="submit" class="primary-button lb-submit"><span>VALIDER</span><b><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></b></button></div></form><button type="button" class="name-skip" data-action="skip-name">JOUER SANS CLASSEMENT</button>`, 'name-modal');
     setTimeout(() => { try { $('#first-name-input')?.focus(); } catch (_) { /* rien */ } }, 300);
+  }
+
+  // « Jouer sans classement » : rien n'est envoyé en ligne ; le pseudo pourra être choisi plus tard (menu Classement).
+  function skipFirstName() {
+    online.skipped = true; saveOnline();
+    state.mandatoryModal = false;
+    closeModal();
+    playSfx('button'); showToast('Pas de classement pour l\u2019instant. Tu pourras le rejoindre depuis le menu Classement.');
+    renderLeaderboardTeaser();
   }
 
   function submitFirstName(raw) {
